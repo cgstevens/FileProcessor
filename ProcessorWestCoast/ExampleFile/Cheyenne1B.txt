@@ -1,0 +1,4 @@
+"ADUSERNAME"|"SITE"
+"steph.stevens"|"ThisPlace"
+"neo.anderson"|"ThatPlace"
+"thomas.mangos"|"OverThere"
