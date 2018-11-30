@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Shared.Models;
+using SharedLibrary.Models;
 
-namespace Shared.Repos
+namespace SharedLibrary.Repos
 {
     public interface IFileProcessorRepository
     {

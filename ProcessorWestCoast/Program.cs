@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using FileProcessorWestCoast.Actors;
-using Shared.Helpers;
+using ProcessorWestCoast.Actors;
+using SharedLibrary.Helpers;
 
-namespace FileProcessorWestCoast
+namespace ProcessorWestCoast
 {
     public partial class Program
     {

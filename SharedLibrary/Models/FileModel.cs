@@ -1,7 +1,6 @@
 ﻿using FileHelpers;
-using Shared.Enums;
 
-namespace Shared.Models
+namespace SharedLibrary.Models
 {
     [DelimitedRecord("|")]
     [IgnoreFirst(1)]

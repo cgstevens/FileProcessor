@@ -20,29 +20,13 @@ using Akka.DI.Core;
 using Akka.DI.Ninject;
 using Petabridge.Cmd.Cluster;
 using Petabridge.Cmd.Host;
-using Shared;
-using Shared.Actors;
-using Shared.Repos;
+using SharedLibrary.Actors;
+using SharedLibrary.Repos;
 
 namespace Lighthouse
 {
     public class LighthouseService
     {
-        private readonly string _ipAddress;
-        private readonly int? _port;
-        private readonly string _actorSystemName;
-
-        
-
-        public LighthouseService() : this(null, null, null) { }
-
-        public LighthouseService(string ipAddress, int? port, string actorSystemName)
-        {
-            _ipAddress = ipAddress;
-            _port = port;
-            _actorSystemName = actorSystemName;
-        }
-
         public void Start()
         {
             SystemActors.ClusterSystem = SystemHostFactory.Launch();
@@ -56,8 +40,6 @@ namespace Lighthouse
             var pbm = PetabridgeCmd.Get(SystemActors.ClusterSystem);
             pbm.RegisterCommandPalette(ClusterCommands.Instance); // enable cluster management commands
             pbm.Start();
-
-            //SystemActors.SettingsWatcherRef = SystemActors.ClusterSystem.ActorOf(SystemActors.ClusterSystem.DI().Props<DatabaseWatcherActor>(), "SettingWatchers");
 
             SystemActors.Mediator = DistributedPubSub.Get(SystemActors.ClusterSystem).Mediator;
         }

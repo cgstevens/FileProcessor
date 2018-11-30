@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Akka.Actor;
-using LocationStatusViewer.Actors;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
+using WebMonitor.Actors;
 
-namespace LocationStatusViewer.Hubs
+namespace WebMonitor.Hubs
 {
     /// <inheritdoc />
     /// <summary>

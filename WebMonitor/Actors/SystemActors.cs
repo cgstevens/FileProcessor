@@ -1,6 +1,6 @@
 ﻿using Akka.Actor;
 
-namespace LocationStatusViewer.Actors
+namespace WebMonitor.Actors
 {
 
     public static class SystemActors

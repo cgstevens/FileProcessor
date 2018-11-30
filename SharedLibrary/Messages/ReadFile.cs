@@ -1,7 +1,6 @@
 ﻿using System.IO;
-using Shared.Models;
 
-namespace Shared.Messages
+namespace SharedLibrary.Messages
 {
     public class ValidateFileWatcher
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 
-namespace Shared.Helpers
+namespace SharedLibrary.Helpers
 {
     public static class ListActionExtensions
     {

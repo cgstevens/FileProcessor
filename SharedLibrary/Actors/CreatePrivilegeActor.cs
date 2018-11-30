@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Event;
-using Shared.Helpers;
-using Shared.Messages;
-using Shared.Models;
-using Shared.PubSub;
-using Shared.Repos;
+using SharedLibrary.Helpers;
+using SharedLibrary.Messages;
+using SharedLibrary.PubSub;
+using SharedLibrary.Repos;
 
-namespace Shared.Actors
+namespace SharedLibrary.Actors
 {
     public class CreatePrivilegeActor : ReceiveActor, IWithUnboundedStash
     {

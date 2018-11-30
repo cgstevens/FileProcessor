@@ -1,12 +1,11 @@
-﻿using System;
-using Akka.Actor;
+﻿using Akka.Actor;
 using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Event;
-using LocationStatusViewer.Hubs;
-using Shared.Messages;
-using Shared.PubSub;
+using SharedLibrary.Messages;
+using SharedLibrary.PubSub;
+using WebMonitor.Hubs;
 
-namespace LocationStatusViewer.Actors
+namespace WebMonitor.Actors
 {
     /// <summary>
     /// Actor used to wrap a signalr hub

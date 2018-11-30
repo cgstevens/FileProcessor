@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Shared.Models
+namespace SharedLibrary.Models
 {
     public class FileSettingsModel
     {

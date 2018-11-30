@@ -1,4 +1,4 @@
-﻿namespace Shared.Helpers
+﻿namespace SharedLibrary.Helpers
 {
     public static class CompareHelpers
     {

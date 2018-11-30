@@ -4,9 +4,8 @@ using System.Linq;
 using Akka.Actor;
 using Akka.Cluster.Tools.Client;
 using Akka.Configuration;
-using ConfigurationException = Akka.Configuration.ConfigurationException;
 
-namespace Shared.Actors
+namespace SharedLibrary.Actors
 {
     public static class SystemHostFactory
     {

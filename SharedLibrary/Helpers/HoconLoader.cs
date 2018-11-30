@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Akka.Configuration;
 
-namespace Shared.Helpers
+namespace SharedLibrary.Helpers
 {
     public static class HoconLoader
     {

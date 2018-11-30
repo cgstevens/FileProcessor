@@ -1,13 +1,12 @@
 using System;
 using Akka.Actor;
-using Akka.Configuration;
-using Akka.Event;
-using Shared.Helpers;
-using Shared.Messages;
 using Akka.Cluster.Tools.PublishSubscribe;
-using Shared.PubSub;
+using Akka.Event;
+using SharedLibrary.Helpers;
+using SharedLibrary.Messages;
+using SharedLibrary.PubSub;
 
-namespace Shared.Actors
+namespace SharedLibrary.Actors
 {
     public class LocationActor : ReceiveActor
     {

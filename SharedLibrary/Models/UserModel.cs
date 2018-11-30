@@ -1,8 +1,4 @@
-﻿using System.Data;
-using FileHelpers;
-using Shared.Enums;
-
-namespace Shared.Models
+﻿namespace SharedLibrary.Models
 {
     public class UserRecord
     {

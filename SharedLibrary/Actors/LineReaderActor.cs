@@ -5,12 +5,11 @@ using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.DI.Core;
 using Akka.Event;
 using Akka.Routing;
-using Shared.Helpers;
-using Shared.Messages;
-using Shared.Models;
-using Shared.PubSub;
+using SharedLibrary.Helpers;
+using SharedLibrary.Messages;
+using SharedLibrary.PubSub;
 
-namespace Shared.Actors
+namespace SharedLibrary.Actors
 {
     public class LineReaderActor : ReceiveActor, IWithUnboundedStash
     {

@@ -1,4 +1,4 @@
-﻿namespace WinForms
+﻿namespace WinForms.Messages
 {
     public class Messages
     {
@@ -23,21 +23,5 @@
             public string Address { get; private set; }
         }
         
-        public class SubscribeMessage
-        {
-            public SubscribeMessage(string message)
-            {
-                Message = message;
-            }
-
-            public string Message { get; private set; }
-        }
-
-        internal class GetClusterState
-        {
-            public GetClusterState()
-            {
-            }
-        }
     }
 }

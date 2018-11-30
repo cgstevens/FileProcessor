@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ExceptionServices;
+﻿using System.Linq;
 
-namespace Shared.Helpers
+namespace SharedLibrary.Helpers
 {
     public static class GetProperty
     {

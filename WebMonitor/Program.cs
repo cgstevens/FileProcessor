@@ -1,8 +1,7 @@
-﻿using Akka.Actor;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace LocationStatusViewer
+namespace WebMonitor
 {
     public class Program
     {

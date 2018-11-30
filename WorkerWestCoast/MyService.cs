@@ -5,11 +5,10 @@ using Akka.DI.Core;
 using Akka.DI.Ninject;
 using Petabridge.Cmd.Cluster;
 using Petabridge.Cmd.Host;
-using Shared;
-using Shared.Actors;
-using Shared.Repos;
+using SharedLibrary.Actors;
+using SharedLibrary.Repos;
 
-namespace ClusterWorkerWestCoast
+namespace WorkerWestCoast
 {
     public class MyService
     {
@@ -29,7 +28,6 @@ namespace ClusterWorkerWestCoast
             IDependencyResolver resolver = new NinjectDependencyResolver(container, SystemActors.ClusterSystem);
             
             SystemActors.Mediator = DistributedPubSub.Get(SystemActors.ClusterSystem).Mediator;
-            SystemActors.SettingsWatcherRef = SystemActors.ClusterSystem.ActorOf(SystemActors.ClusterSystem.DI().Props<DatabaseWatcherActor>(), "SettingWatchers");
         }
 
         public Task TerminationHandle => SystemActors.ClusterSystem.WhenTerminated;

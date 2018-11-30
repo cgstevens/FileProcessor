@@ -3,12 +3,11 @@ using System.IO;
 using Akka.Actor;
 using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Event;
-using Shared.Helpers;
-using Shared.Messages;
-using Shared.Models;
-using Shared.PubSub;
+using SharedLibrary.Helpers;
+using SharedLibrary.Messages;
+using SharedLibrary.PubSub;
 
-namespace Shared.Actors
+namespace SharedLibrary.Actors
 {
     public class FileWatcherActor : ReceiveActor, IWithUnboundedStash
     {

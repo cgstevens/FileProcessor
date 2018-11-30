@@ -4,14 +4,14 @@ using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Cluster.Tools.Singleton;
 using Akka.DI.Core;
 using Akka.DI.Ninject;
-using FileProcessorEastCoast.Actors;
 using Petabridge.Cmd.Cluster;
 using Petabridge.Cmd.Host;
-using Shared.Actors;
-using Shared.Helpers;
-using Shared.Repos;
+using ProcessorEastCoast.Actors;
+using SharedLibrary.Actors;
+using SharedLibrary.Helpers;
+using SharedLibrary.Repos;
 
-namespace FileProcessorEastCoast
+namespace ProcessorEastCoast
 {
     public class MyService
     {

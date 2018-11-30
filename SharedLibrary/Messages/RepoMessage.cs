@@ -1,7 +1,4 @@
-﻿using System;
-using Akka.Actor;
-
-namespace Shared.Messages
+﻿namespace SharedLibrary.Messages
 {
     
     public class RepoMessage

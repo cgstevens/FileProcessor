@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Shared.Models
+﻿namespace SharedLibrary.Models
 {
     public class LocationModel
     {

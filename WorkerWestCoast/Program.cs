@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Akka.Actor;
-using Shared.Helpers;
+using SharedLibrary.Helpers;
 
-namespace ClusterWorkerWestCoast
+namespace WorkerWestCoast
 {
     public partial class Program
     {
@@ -44,8 +42,6 @@ namespace ClusterWorkerWestCoast
         }
 
         #endregion
-
-
 
         public static void Main(string[] args)
         {

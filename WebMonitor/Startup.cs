@@ -2,23 +2,17 @@
 using System.Threading;
 using Akka.Actor;
 using Akka.Cluster.Tools.PublishSubscribe;
-using Akka.DI.Core;
-using Akka.DI.Ninject;
-using LocationStatusViewer.Actors;
-using LocationStatusViewer.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Petabridge.Cmd.Cluster;
 using Petabridge.Cmd.Host;
-using Shared;
-using Shared.Actors;
-using Shared.Repos;
+using SharedLibrary.Actors;
+using WebMonitor.Actors;
+using WebMonitor.Hubs;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
-namespace LocationStatusViewer
+namespace WebMonitor
 {
     public class Startup
     {

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Shared.Messages
+namespace SharedLibrary.Messages
 {
     public class FileCreated
     {

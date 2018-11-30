@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Shared.Models;
+using SharedLibrary.Models;
 
-namespace Shared.Messages
+namespace SharedLibrary.Messages
 {
 
     public class LocationsFromDatabase

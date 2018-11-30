@@ -2,7 +2,7 @@
 using System.Threading;
 using Timer = System.Timers.Timer;
 
-namespace Shared.Helpers
+namespace SharedLibrary.Helpers
 {
     public class Waiter
     {

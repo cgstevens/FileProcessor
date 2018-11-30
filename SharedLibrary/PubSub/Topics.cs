@@ -1,4 +1,4 @@
-﻿namespace Shared.PubSub
+﻿namespace SharedLibrary.PubSub
 {
   public static class Topics
   {

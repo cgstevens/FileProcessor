@@ -3,15 +3,14 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
 using Akka.Actor;
-using Shared.Actors;
+using Akka.Cluster.Tools.PublishSubscribe;
+using SharedLibrary.Actors;
 using WinForms.Actors;
 
 namespace WinForms
 {
     public partial class Main : Form
     {
-        
-
         public Main()
         {
             InitializeComponent();
@@ -19,7 +18,7 @@ namespace WinForms
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (Program.ClusterManagerActor != null)
+            if (SystemActors.ClusterManagerActor != null)
             {
                 //_clusterManagerActor.Tell(new ClusterManager.UnSubscribeFromManager());
             }
@@ -61,14 +60,15 @@ namespace WinForms
 
         public void InitializeCluster()
         {
-            Program.MyActorSystem = SystemHostFactory.Launch();
+            SystemActors.ClusterSystem = SystemHostFactory.Launch();
             loggerBox.Items.Insert(0, string.Format("{0}  {1}", DateTime.Now.ToString("MM-dd-yy hh:mm:ss.fff"), "Actor System Started"));
             InitializeActors();
         }
 
         private void InitializeActors()
         {
-            Program.ClusterManagerActor = Program.MyActorSystem.ActorOf(Props.Create(() => new ClusterStatusActor(loggerBox, clusterListView, unreachableListView, seenByListView)), "monitor");
+            SystemActors.ClusterManagerActor = SystemActors.ClusterSystem.ActorOf(Props.Create(() => new ClusterStatusActor(loggerBox, clusterListView, unreachableListView, seenByListView)), "monitor");
+            SystemActors.Mediator = DistributedPubSub.Get(SystemActors.ClusterSystem).Mediator;
             loggerBox.Items.Insert(0, string.Format("{0}  {1}", DateTime.Now.ToString("MM-dd-yy hh:mm:ss.fff"), "Cluster Manager Actor Started"));
         }
 
@@ -77,7 +77,7 @@ namespace WinForms
             var selectedItem = clusterListView.SelectedItems;
             if (selectedItem.Count > 0)
             {
-                Program.ClusterManagerActor.Tell(new Messages.MemberLeave(selectedItem[0].Name));
+                SystemActors.ClusterManagerActor.Tell(new Messages.Messages.MemberLeave(selectedItem[0].Name));
             }
             else
             {
@@ -90,7 +90,7 @@ namespace WinForms
             var selectedItem = clusterListView.SelectedItems;
             if (selectedItem.Count > 0)
             {
-                Program.ClusterManagerActor.Tell(new Messages.MemberDown(selectedItem[0].Name));
+                SystemActors.ClusterManagerActor.Tell(new Messages.Messages.MemberDown(selectedItem[0].Name));
             }
             else
             {

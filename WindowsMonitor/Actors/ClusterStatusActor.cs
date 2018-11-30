@@ -6,8 +6,11 @@ using System.Windows.Forms;
 using Akka.Actor;
 using Akka.Cluster;
 using Akka.Cluster.Tools.Client;
+using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Event;
 using Akka.Util.Internal;
+using SharedLibrary.Messages;
+using SharedLibrary.PubSub;
 
 namespace WinForms.Actors
 {
@@ -27,27 +30,29 @@ namespace WinForms.Actors
 
         public ClusterStatusActor(ListBox clusterListBox, ListView clusterListView, ListView unreachableListView, ListView seenByListView)
         {
+            var self = Self;
             Members = new Dictionary<string, Member>();
             _clusterListBox = clusterListBox;
             _clusterListView = clusterListView;
             _seenByListView = seenByListView;
             _unreachableListView = unreachableListView;
-            
+            SystemActors.Mediator.Tell(new Subscribe(Topics.Status, self));
             Receives();
         }
 
         protected override void PostStop()
         {
+            var self = Self;
             Cluster.Unsubscribe(Self);
             _currentClusterStateTeller?.Cancel(false);
+            SystemActors.Mediator.Tell(new Unsubscribe(Topics.Status, self));
         }
         protected override void PreStart()
         {
             Cluster.Subscribe(Self, ClusterEvent.InitialStateAsEvents, new[] { typeof(ClusterEvent.IMemberEvent), typeof(ClusterEvent.IReachabilityEvent) });
             _currentClusterStateTeller = Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(TimeSpan.FromSeconds(5),
-                TimeSpan.FromSeconds(5), Self, new Messages.GetCurrentClusterState(), Self);
+                TimeSpan.FromSeconds(60), Self, new Messages.Messages.GetCurrentClusterState(), Self);
         }
-
 
         private void UpdateClusterListView(Member member)
         {
@@ -137,7 +142,12 @@ namespace WinForms.Actors
 
         private void Receives()
         {
-            Receive<Messages.GetCurrentClusterState>(dowhat =>
+            Receive<SignalRMessage>(ic =>
+            {
+                _clusterListBox.Items.Insert(0, string.Format("{0} {1} {2}", ic.System, ic.Actor, ic.Message));
+            });
+
+            Receive<Messages.Messages.GetCurrentClusterState>(dowhat =>
             {
                 _clusterListBox.Items.Insert(0, string.Format("{0} Updating Cluster State", DateTime.Now.ToString("MM-dd-yy hh:mm:ss.fff")));
                 var state = Cluster.State;
@@ -275,7 +285,7 @@ namespace WinForms.Actors
             });
 
 
-            Receive<Messages.MemberDown>(key =>
+            Receive<Messages.Messages.MemberDown>(key =>
             {
                 if (Members.ContainsKey(key.Address))
                 {
@@ -286,7 +296,7 @@ namespace WinForms.Actors
                 }
             });
 
-            Receive<Messages.MemberLeave>(key =>
+            Receive<Messages.Messages.MemberLeave>(key =>
             {
                 if (Members.ContainsKey(key.Address))
                 {

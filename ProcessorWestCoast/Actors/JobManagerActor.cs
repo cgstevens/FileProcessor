@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Akka.Actor;
 using Akka.Event;
-using Shared.Actors;
-using Shared.Messages;
+using SharedLibrary.Actors;
+using SharedLibrary.Messages;
 
-namespace FileProcessorWestCoast.Actors
+namespace ProcessorWestCoast.Actors
 {
     public class JobManagerActor : ReceiveActor
     {

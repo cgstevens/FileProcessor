@@ -1,4 +1,4 @@
-﻿namespace Shared.Messages
+﻿namespace SharedLibrary.Messages
 {
     public class ObjectSubscription
     {

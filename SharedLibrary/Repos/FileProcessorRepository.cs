@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using Shared.Models;
+using SharedLibrary.Models;
 
-namespace Shared.Repos
+namespace SharedLibrary.Repos
 {
     public class FileProcessorRepository : IFileProcessorRepository
     {
@@ -73,18 +71,7 @@ namespace Shared.Repos
 
                         command.CommandTimeout = 30;
 
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                var test = "Nothing to do";
-                            }
-                        }
-                        else
-                        {
-                            //Console.WriteLine("No rows found.");
-                        }
+                        command.ExecuteNonQuery();
                     }
                 }
                 catch (Exception ex)

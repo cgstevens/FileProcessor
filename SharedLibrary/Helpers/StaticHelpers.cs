@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using Akka.Configuration;
 
-namespace Shared.Helpers
+namespace SharedLibrary.Helpers
 {
     public static class StaticMethods
     {

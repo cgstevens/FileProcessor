@@ -6,10 +6,7 @@ namespace WinForms
 {
     static class Program
     {
-
-        public static ActorSystem MyActorSystem;
-        public static IActorRef ClusterManagerActor;
-
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿using Akka.Actor;
 
-namespace Shared.Actors
+namespace SharedLibrary.Actors
 {
     /// <summary>
     /// Static helper class used to define paths to fixed-name actors

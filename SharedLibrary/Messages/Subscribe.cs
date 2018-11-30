@@ -1,8 +1,6 @@
-﻿using System;
-using Akka.Actor;
-using Shared.Helpers;
+﻿using Akka.Actor;
 
-namespace Shared.Messages
+namespace SharedLibrary.Messages
 {
 
     public class FoundAvailableWorkers

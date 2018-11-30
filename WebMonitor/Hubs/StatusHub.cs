@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Akka.Actor;
-using LocationStatusViewer.Actors;
-using LocationStatusViewer.Hubs;
 using Microsoft.AspNetCore.SignalR;
-using Shared.Helpers;
-using Shared.Messages;
+using SharedLibrary.Helpers;
+using SharedLibrary.Messages;
+using WebMonitor.Actors;
 
-namespace LocationStatusViewer.Hubs
+namespace WebMonitor.Hubs
 {
 
     public class StatusHub : Hub

@@ -266,6 +266,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ClusterStatusActor.cs" />
+    <Compile Include="Actors\SystemActors.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

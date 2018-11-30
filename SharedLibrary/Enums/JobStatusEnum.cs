@@ -1,4 +1,4 @@
-﻿namespace Shared.Enums
+﻿namespace SharedLibrary.Enums
 {
     public enum JobStatusEnum
     {

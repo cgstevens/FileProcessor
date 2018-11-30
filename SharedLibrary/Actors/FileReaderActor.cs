@@ -5,17 +5,16 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Cluster.Routing;
 using Akka.Cluster.Tools.PublishSubscribe;
-using Akka.DI.Core;
 using Akka.Event;
 using Akka.Routing;
 using FileHelpers;
-using Shared.Enums;
-using Shared.Helpers;
-using Shared.Messages;
-using Shared.Models;
-using Shared.PubSub;
+using SharedLibrary.Enums;
+using SharedLibrary.Helpers;
+using SharedLibrary.Messages;
+using SharedLibrary.Models;
+using SharedLibrary.PubSub;
 
-namespace Shared.Actors
+namespace SharedLibrary.Actors
 {
     public class FileReaderActor : ReceiveActor, IWithUnboundedStash
     {
