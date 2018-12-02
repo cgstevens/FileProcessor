@@ -64,16 +64,15 @@ Report back what the status of the work back to the Tasker.
 ### WebMonitor
 
 ### WindowsMonitor
-Shows the state of the cluster from its point of view.
+Shows the state of the cluster from its point of view.  Allows you to tell a member of the clister to leave or be considered down. 
 
 ### SharedLibrary
-Contains the messages, shared paths and actors used in the above projects.
+Contains the messages, paths and actors that are shared between the above projects.
 
 
 
 
-
-###Common Akka Links to help you along with your Akka adventure!
+## Common Akka Links to help you along with your Akka adventure!
 Main Site: http://getakka.net/
 Documentation: http://getakka.net/docs/
 The Code (includes basic examples): https://github.com/akkadotnet/getakka.net
