@@ -30,7 +30,7 @@ namespace ProcessorWestCoast
             pbm.RegisterCommandPalette(ClusterCommands.Instance); // enable cluster management commands
             pbm.Start();
 
-            SystemActors.SettingsWatcherRef = SystemActors.ClusterSystem.ActorOf(SystemActors.ClusterSystem.DI().Props<DatabaseWatcherActor>(), "SettingWatchers");
+            SystemActors.SettingsWatcherRef = SystemActors.ClusterSystem.ActorOf(SystemActors.ClusterSystem.DI().Props<DatabaseWatcherActor>(), "DatabaseWatcher");
             SystemActors.Mediator = DistributedPubSub.Get(SystemActors.ClusterSystem).Mediator;
 
             SystemActors.LocationManagerActorRef = SystemActors.ClusterSystem.ActorOf(ClusterSingletonManager.Props(
