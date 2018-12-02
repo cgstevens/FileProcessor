@@ -33,7 +33,7 @@ To get the solution running follow these step.
 3. Build the solution and launch the following applications.
  
 
-Framework
+## Framework
 DotNetCore 2.1
 SignalR 
 NetStandard 2.0
@@ -42,18 +42,18 @@ Akka.Cluster 1.3.10
 Akka.Cluster.Tools 1.3.10
 FileHelpers 3.3.0
 
-Projects 
+## Projects 
 
-###Lighthouse 
+### Lighthouse 
 It is a service-discovery service called a seed node. To maintain fault tolerance you should always run two instances which allows other members to join when needed. 
 
 
-Processor
+### Processor
       EastCoast
       WestCoast
 
-Worker
-###Worker Plain cluster member ready for the tasker to task work off to.
+### Worker
+The worker is a cluster member ready for the manager to task work off to.
 Demonstrates clean exit when itself is removed from the cluster.
 The worker will get a set of records and then process those records.
 Report back what the status of the work back to the Tasker.
@@ -61,13 +61,12 @@ Report back what the status of the work back to the Tasker.
       EastCoast
       WestCoast
 
-WebMonitor
+### WebMonitor
 
-WindowsMonitor
-###WinForms
+### WindowsMonitor
 Shows the state of the cluster from its point of view.
 
-###SharedLibrary
+### SharedLibrary
 Contains the messages, shared paths and actors used in the above projects.
 
 
