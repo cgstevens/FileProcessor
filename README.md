@@ -33,15 +33,52 @@ To get the solution running follow these step.
 3. Build the solution and launch the following applications.
  
 
-## Framework
-* DotNetCore 2.1
-* SignalR 
-* NetStandard 2.0
-* Akka.Net 1.3.10
-* Akka.Cluster 1.3.10
-* Akka.Cluster.Tools 1.3.10
-* FileHelpers 3.3.0
-* Knockout 3.3.0
+## Frameworks
+* **DotNetCore 2.1**
+
+	https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-2-1
+
+* **SignalR**
+
+	https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-2.1&tabs=visual-studio
+
+* **NetStandard 2.0**
+	
+	https://docs.microsoft.com/en-us/dotnet/standard/net-standard
+
+* **Akka.Net 1.3.10**
+
+	https://getakka.net/ 
+
+	Allows you to build powerful distributed event driven sytems using actors.  
+	
+* **Akka.Cluster 1.3.10**
+
+	https://getakka.net/articles/clustering/cluster-overview.html
+	
+
+* **Akka.Cluster.Tools 1.3.10** - The cluster tools brings us the ability to have the following.
+	- Singleton: https://getakka.net/articles/clustering/cluster-singleton.html
+	- Distributed Pub/Sub: https://getakka.net/articles/clustering/distributed-publish-subscribe.html
+ 	- Sharding: https://getakka.net/articles/clustering/cluster-sharding.html
+	
+* **FileHelpers 3.3.0**
+
+	https://www.filehelpers.net/
+
+	By creating a simple class that describes the file I wanted to import allowed me to easily read the contents of a file.
+	You can see the simple example in the SharedLibrary\Actors\FileReaderActor.cs file.
+	
+		var engine = new FileHelperEngine<FileModel>();
+		var records = engine.ReadFile(file.Args.FullPath);
+	
+* **Knockout 3.3.0**
+
+	https://knockoutjs.com/
+
+	This made it easy to wire up bindings for a quick demo.  
+	You can see this in action in the WebMonitor in the WebMonitor\wwwroo\index.html file.
+
 
 ## Projects 
 
@@ -50,6 +87,9 @@ It is a service-discovery service called a seed node. To maintain fault toleranc
 
 
 ### Processor
+The prcoessor contains a singleton actor.  
+
+
       EastCoast
       WestCoast
 
