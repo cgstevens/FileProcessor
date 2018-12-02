@@ -34,13 +34,14 @@ To get the solution running follow these step.
  
 
 ## Framework
-DotNetCore 2.1
-SignalR 
-NetStandard 2.0
-Akka.Net 1.3.10
-Akka.Cluster 1.3.10
-Akka.Cluster.Tools 1.3.10
-FileHelpers 3.3.0
+* DotNetCore 2.1
+* SignalR 
+* NetStandard 2.0
+* Akka.Net 1.3.10
+* Akka.Cluster 1.3.10
+* Akka.Cluster.Tools 1.3.10
+* FileHelpers 3.3.0
+* Knockout 3.3.0
 
 ## Projects 
 
