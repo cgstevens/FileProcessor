@@ -87,11 +87,39 @@ It is a service-discovery service called a seed node. To maintain fault toleranc
 
 
 ### Processor
-The prcoessor contains a singleton actor.  
+In a highly-available application, it is occasionally necessary to have some processing performed in isolation within a cluster, while still allowing for processing to continue should the designated worker node fail. Cluster Singleton pattern makes this very easy. For example, consider a system that processes a file from a clustered file system or aggregating and then needs to perform some sort of action on these records within the file. 
+
+You can see my older version created using DotNet 4.6 and AngularJS.  Same concept as this example but dealt with invoices.
+	https://github.com/cgstevens/MyClusterServices
+
+In the FileProcessor example I have created a Singleton Actor.  This actor will only exist on either the ProcessorEastCoast or ProcessorWestCoast services.  Since all actor systems are hierarchical; lets start are the top.
+
+* **DatabaseWatcherActor**
+	This actor is created for the sole purpose to watch the database for changes and tell actors about these changes.
+	It maintains its own cache of the Locations and its FileSettings in this example.  
+
+	If an actor would like to subscribe to the InboundFolder within the FileSettings model that is a property of the Location model.
+	All it would need to do is send the following tell.  This example demonstrates the usage of **ActorSelection** to tell the DatabaseWatcher that it would like to subscribe to FileSettings.InboundFolder.  Then when that property changes this actor is sent those changes.
+
+		Context.ActorSelection("/user/DatabaseWatcher").Tell(new SubscribeToObjectChanges(self, _name, "FileSettings.InboundFolder"));
+            
+		
+
+* **LocationManagerActor**
+	This is the Singleton Actor.  Its sole purpose is to track 
+
+	My previous example, MyClusterServices, I created remote actors and then sent a message to them to start working.
+	In this example I want to keep the managing of the work isolated and the real work I want to have a worker.
+	This means that instead of creating this monolitic actors structure remotely; 
+	I would create smaller units of work that would be perform remotely.
+
+	Since this actor is has subcribe to, everything, the DatabaseWatcher will let the manager know when a location has been addded or removed.
+	
+	_ **LocationActor**
+		
+	
 
 
-      EastCoast
-      WestCoast
 
 ### Worker
 The worker is a cluster member ready for the manager to task work off to.
