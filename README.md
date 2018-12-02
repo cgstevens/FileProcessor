@@ -74,12 +74,20 @@ Contains the messages, paths and actors that are shared between the above projec
 
 ## Common Akka Links to help you along with your Akka adventure!
 Main Site: http://getakka.net/
+
 Documentation: http://getakka.net/docs/
+
 The Code (includes basic examples): https://github.com/akkadotnet/getakka.net
+
 Need to ask a question: https://gitter.im/akkadotnet/akka.net
+
 Where do you begin: https://github.com/petabridge/akka-bootcamp
+
 Where do you begin Part2: https://github.com/petabridge/akkadotnet-code-samples
+
 Webcrawler: https://github.com/petabridge/akkadotnet-code-samples/tree/master/Cluster.WebCrawler
+
 Persistent Actors: https://petabridge.com/blog/intro-to-persistent-actors/
+
 
 
