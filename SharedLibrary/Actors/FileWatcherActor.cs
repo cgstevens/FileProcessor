@@ -38,7 +38,7 @@ namespace SharedLibrary.Actors
             ValidateFolderAndSettings?.Cancel(false);
             _watcher?.Dispose();
             var self = Self;
-            Context.ActorSelection("/user/SettingWatchers").Tell(new UnSubscribeToObjectChanges(self));
+            Context.ActorSelection("/user/DatabaseWatcher").Tell(new UnSubscribeToObjectChanges(self));
             LogToEverything(Context, $"FileSystemWatcher has stopped monitoring {_folderPath.FullName.ToString()}");
 
             _watcher = null;
@@ -48,7 +48,7 @@ namespace SharedLibrary.Actors
         private void BecomeStartup()
         {
             var self = Self;
-            Context.ActorSelection("/user/SettingWatchers").Tell(new SubscribeToObjectChanges(self, _name, "FileSettings.InboundFolder"));
+            Context.ActorSelection("/user/DatabaseWatcher").Tell(new SubscribeToObjectChanges(self, _name, "FileSettings.InboundFolder"));
             ValidateFolderAndSettings = Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(_scheduleDelay), self, new ValidateFileWatcher(), self);
             Become(WaitingForSettings);
         }
