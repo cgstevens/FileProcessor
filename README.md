@@ -104,6 +104,8 @@ In the FileProcessor example I have created a Singleton Actor.  This actor will 
 		Context.ActorSelection("/user/DatabaseWatcher").Tell(new SubscribeToObjectChanges(self, _name, "FileSettings.InboundFolder"));
             
 		
+	This actor also demonatrates the usage of dependency injection.
+	
 
 * **LocationManagerActor**
 	This is the Singleton Actor.  Its sole purpose is to track 
