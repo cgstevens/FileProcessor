@@ -75,17 +75,17 @@ akka {
     #will inject this node as a self-seed node at run-time
     seed-nodes = ["akka.tcp://mysystem@127.0.0.1:4053"] 
 	#seed-nodes = []
-    roles = [FileMananger]
+    roles = [LocationMananger]
 
 	singleton {
-        singleton-name = "filemanager"
-        role = "FileMananger"
+        singleton-name = "locationmanager"
+        role = "LocationMananger"
         hand-over-retry-interval = 2s
     }
               
     singleton-proxy {
-        singleton-name = "filemanager"
-        role = "FileMananger"
+        singleton-name = "locationmanager"
+        role = "LocationMananger"
         singleton-identification-interval = 2s
         buffer-size = 1
     }

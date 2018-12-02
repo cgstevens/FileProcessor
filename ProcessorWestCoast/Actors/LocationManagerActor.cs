@@ -6,12 +6,12 @@ using SharedLibrary.Messages;
 
 namespace ProcessorWestCoast.Actors
 {
-    public class JobManagerActor : ReceiveActor
+    public class LocationManagerActor : ReceiveActor
     {
         private readonly ILoggingAdapter _logger;
         private readonly Dictionary<string, IActorRef> _locations;
 
-        public JobManagerActor()
+        public LocationManagerActor()
         {
             _locations = new Dictionary<string, IActorRef>();
             _logger = Context.GetLogger();

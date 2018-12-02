@@ -33,13 +33,13 @@ namespace ProcessorEastCoast
             SystemActors.SettingsWatcherRef = SystemActors.ClusterSystem.ActorOf(SystemActors.ClusterSystem.DI().Props<DatabaseWatcherActor>(), "SettingWatchers");
             SystemActors.Mediator = DistributedPubSub.Get(SystemActors.ClusterSystem).Mediator;
 
-            SystemActors.JobManagerActorRef = SystemActors.ClusterSystem.ActorOf(ClusterSingletonManager.Props(
-                    singletonProps: Props.Create(() => new JobManagerActor()),         // Props used to create actor singleton
+            SystemActors.LocationManagerActorRef = SystemActors.ClusterSystem.ActorOf(ClusterSingletonManager.Props(
+                    singletonProps: Props.Create(() => new LocationManagerActor()),         // Props used to create actor singleton
                     terminationMessage: PoisonPill.Instance,                  // message used to stop actor gracefully
                     settings: ClusterSingletonManagerSettings.Create(SystemActors.ClusterSystem).WithRole(StaticMethods.GetServiceWorkerRole())),// cluster singleton manager settings
                 name: ActorPaths.SingletonManagerActor.Name);
 
-            SystemActors.JobManagerProxyRef = SystemActors.ClusterSystem.ActorOf(ClusterSingletonProxy.Props(
+            SystemActors.LocationManagerProxyRef = SystemActors.ClusterSystem.ActorOf(ClusterSingletonProxy.Props(
                     singletonManagerPath: ActorPaths.SingletonManagerActor.Path,
                     settings: ClusterSingletonProxySettings.Create(SystemActors.ClusterSystem).WithRole(StaticMethods.GetServiceWorkerRole())),
                 name: ActorPaths.SingletonManagerProxy.Name);

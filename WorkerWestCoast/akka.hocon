@@ -37,7 +37,7 @@ akka {
       applied-adapters = []
       transport-protocol = tcp
       #will be populated with a dynamic host-name at runtime if left uncommented
-      #public-hostname = "POPULATE STATIC IP HERE"
+      #public-hostname = "127.0.0.1"
       hostname = "127.0.0.1"
       port = 0
     }

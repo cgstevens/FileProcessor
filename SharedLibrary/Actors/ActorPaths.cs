@@ -9,7 +9,7 @@ namespace SharedLibrary.Actors
     public static class ActorPaths
     {
         public static readonly string ActorSystem = "mysystem";
-        public static readonly ActorMetaData JobManagerActor = new ActorMetaData("JobManager", "/user/JobManager");
+        public static readonly ActorMetaData LocationManagerActor = new ActorMetaData("LocationManager", "/user/LocationManager");
         public static readonly ActorMetaData SingletonManagerActor = new ActorMetaData("singletonmanager", "/user/singletonmanager");
         public static readonly ActorMetaData SingletonManagerProxy = new ActorMetaData("singletonmanagerproxy", "/user/singletonmanagerproxy");
     }

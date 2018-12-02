@@ -8,8 +8,8 @@ namespace ProcessorEastCoast.Actors
         public static ActorSystem ClusterSystem;
 
         public static IActorRef Mediator = ActorRefs.Nobody;
-        public static IActorRef JobManagerActorRef = ActorRefs.Nobody;
-        public static IActorRef JobManagerProxyRef = ActorRefs.Nobody;
+        public static IActorRef LocationManagerActorRef = ActorRefs.Nobody;
+        public static IActorRef LocationManagerProxyRef = ActorRefs.Nobody;
         public static IActorRef SettingsWatcherRef = ActorRefs.Nobody;
     }
 }
