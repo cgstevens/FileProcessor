@@ -2,7 +2,7 @@
 
 Using the actor model we can create powerful concurrent scalable & distributed applications with Akka.Net.  
 
- 
+
 Are you tired of having to put locks on your shared objects and having to manage your threads.
 Do you want to be able to scale your application up by adding actors and even scale out the cluster by just bringing up another service?  
 Want to make your application real-time by using a message bus?
@@ -77,7 +77,7 @@ To get the solution running follow these step.
 	https://knockoutjs.com/
 
 	This made it easy to wire up bindings for a quick demo.  
-	You can see this in action in the WebMonitor in the WebMonitor\wwwroo\index.html file.
+	You can see this in action in the WebMonitor in the WebMonitor\wwwroot\index.html file.
 
 
 ## Projects 
