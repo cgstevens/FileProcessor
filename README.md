@@ -114,9 +114,21 @@ In the FileProcessor example I have created a Singleton Actor.  This actor will 
 	I would create smaller units of work that would be perform remotely.
 
 	Since this actor subcribes to, tenant, the DatabaseWatcher will let the manager know when a location has been addded or removed.
-	This actor will create actors based on the name of the Location.	
+	This actor will create LocationActor's based on the name of the Location.	
 
-	* **LocationActor**
+* **LocationActor**
+	The LocationActor is responsible for managing the FileWatcherActor and FileReaderActor.
+
+
+* **FileWatcherActor**
+	This a single actor that uses the FileSystemWatcher to monitor any changes on the disk.  If a file has been created, renamed or deleted it will fire an event to the Actor to handle and determine what to do.
+
+* **FileReaderActor**
+	This is a single actor as well.  I could create multiple instances of these but I want the order of the files to be processed in order.  This actor will work on only a single file at a time.
+	
+
+* **LineReaderActor**
+		
 		
 	
 
