@@ -32,3 +32,56 @@ To get the solution running follow these step.
 
 3. Build the solution and launch the following applications.
  
+
+Framework
+DotNetCore 2.1
+SignalR 
+NetStandard 2.0
+Akka.Net 1.3.10
+Akka.Cluster 1.3.10
+Akka.Cluster.Tools 1.3.10
+FileHelpers 3.3.0
+
+Projects 
+
+###Lighthouse 
+It is a service-discovery service called a seed node. To maintain fault tolerance you should always run two instances which allows other members to join when needed. 
+
+
+Processor
+      EastCoast
+      WestCoast
+
+Worker
+###Worker Plain cluster member ready for the tasker to task work off to.
+Demonstrates clean exit when itself is removed from the cluster.
+The worker will get a set of records and then process those records.
+Report back what the status of the work back to the Tasker.
+
+      EastCoast
+      WestCoast
+
+WebMonitor
+
+WindowsMonitor
+###WinForms
+Shows the state of the cluster from its point of view.
+
+###SharedLibrary
+Contains the messages, shared paths and actors used in the above projects.
+
+
+
+
+
+###Common Akka Links to help you along with your Akka adventure!
+Main Site: http://getakka.net/
+Documentation: http://getakka.net/docs/
+The Code (includes basic examples): https://github.com/akkadotnet/getakka.net
+Need to ask a question: https://gitter.im/akkadotnet/akka.net
+Where do you begin: https://github.com/petabridge/akka-bootcamp
+Where do you begin Part2: https://github.com/petabridge/akkadotnet-code-samples
+Webcrawler: https://github.com/petabridge/akkadotnet-code-samples/tree/master/Cluster.WebCrawler
+Persistent Actors: https://petabridge.com/blog/intro-to-persistent-actors/
+
+
