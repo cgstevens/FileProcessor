@@ -113,9 +113,10 @@ In the FileProcessor example I have created a Singleton Actor.  This actor will 
 	This means that instead of creating this monolitic actors structure remotely; 
 	I would create smaller units of work that would be perform remotely.
 
-	Since this actor is has subcribe to, everything, the DatabaseWatcher will let the manager know when a location has been addded or removed.
-	
-	_ **LocationActor**
+	Since this actor subcribes to, tenant, the DatabaseWatcher will let the manager know when a location has been addded or removed.
+	This actor will create actors based on the name of the Location.	
+
+	* **LocationActor**
 		
 	
 
