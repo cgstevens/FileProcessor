@@ -43,7 +43,7 @@ To get the solution running follow these step to see the action!
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/WindowsMonitor.png"/>
 
 5. When the ProcessorEastCoast is initialized it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you copy the ExampleFile/UserFile.txt over.  The FileWatcher will read pickup that the file was create and send a message to the FileReader to start reading this file.  
-
+<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ProcessorEastCoastInit.png"/>
 
 
 ## FileProcessor Hierarchical Structure
