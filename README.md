@@ -142,10 +142,8 @@ Demonstrates clean exit when itself is removed from the cluster.
 The worker will get a set of records and then process those records.
 Report back what the status of the work back to the Tasker.
 
-      EastCoast
-      WestCoast
-
 ### WebMonitor
+The WebMonitor subscribes to the Topic.Status and sends anything messages sent to that Topic to the the SignalR Hub.
 
 ### WindowsMonitor
 Shows the state of the cluster from its point of view.  Allows you to tell a member of the clister to leave or be considered down. 
