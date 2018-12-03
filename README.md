@@ -1,4 +1,5 @@
-## Monitor and get real-time statuses using Akka.Net and SignalR
+# Scale Up and Scale Out using Akka.Net
+## Monitor and get real-time statuses when you add SignalR
 
 Using the actor model we can create powerful concurrent scalable & distributed applications with Akka.Net.  
 
@@ -9,17 +10,18 @@ Want to make your application real-time by using a message bus?
 Then hopefully this will show you how to create powerful concurrent & distributed applications using Akka.Net and SignalR.
  
 
-To get the solution running follow these step.
+# How to get this running
+To get the solution running follow these step to see the action!
 
 1. Install the database - Run the database script Database\BuildAllDatabaseThings.sql.
-   	This will setup 2 tables and 2 stored procedues.
+   	This will setup the following tables and stored procedures.
    
 	**Tables**  
 	
 		dbo.Location - Contains a location (this is just an example and could be anything from a state or a region)
 		dbo.FileSetting - Contains the settings about what folder should be monitored.  
 		
-	**Store Procedues**
+	**Store Procedures**
 	
 		dbo.spLocationsWithFileSettings_Get - Gets all the Location and FileSettings.
 		dbo.spLongRunningProcess_ProcessAllThingsMagically - Is used to fake like there is a long running process 
@@ -31,54 +33,16 @@ To get the solution running follow these step.
 	When the Processor project runs and picks up the location it will create the folder.
 
 3. Build the solution and launch the following applications.
- 
-
-## Frameworks
-* **DotNetCore 2.1**
-
-	https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-2-1
-
-* **SignalR**
-
-	https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-2.1&tabs=visual-studio
-
-* **NetStandard 2.0**
+	* Lighthouse
+	* WindowsMonitor
+	* WebMonitor
+	* ProcessorEastCoast
+	* WorkerEastCoast
 	
-	https://docs.microsoft.com/en-us/dotnet/standard/net-standard
+4. Viewing the WindowsMonitor you will be able to see all the members join the cluster.
+<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/WindowsMonitor.png"/>
 
-* **Akka.Net 1.3.10**
-
-	https://getakka.net/ 
-
-	Allows you to build powerful distributed event driven sytems using actors.  
-	
-* **Akka.Cluster 1.3.10**
-
-	https://getakka.net/articles/clustering/cluster-overview.html
-	
-
-* **Akka.Cluster.Tools 1.3.10** - The cluster tools brings us the ability to have the following.
-	- Singleton: https://getakka.net/articles/clustering/cluster-singleton.html
-	- Distributed Pub/Sub: https://getakka.net/articles/clustering/distributed-publish-subscribe.html
- 	- Sharding: https://getakka.net/articles/clustering/cluster-sharding.html
-	
-* **FileHelpers 3.3.0**
-
-	https://www.filehelpers.net/
-
-	By creating a simple class that describes the file I wanted to import allowed me to easily read the contents of a file.
-	You can see the simple example in the SharedLibrary\Actors\FileReaderActor.cs file.
-	
-		var engine = new FileHelperEngine<FileModel>();
-		var records = engine.ReadFile(file.Args.FullPath);
-	
-* **Knockout 3.3.0**
-
-	https://knockoutjs.com/
-
-	This made it easy to wire up bindings for a quick demo.  
-	You can see this in action in the WebMonitor in the WebMonitor\wwwroot\index.html file.
-
+5. When the ProcessorEastCoast is initialized it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you copy the ExampleFile/UserFile.txt over.  The FileWatcher will read pickup that the file was create and send a message to the FileReader to start reading this file.  
 
 
 
@@ -184,8 +148,59 @@ Contains the messages, paths and actors that are shared between the above projec
 
 
 
+# Frameworks
+* **DotNetCore 2.1**
 
-## Common Akka Links to help you along with your Akka adventure!
+	https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-2-1
+
+* **SignalR**
+
+	https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-2.1&tabs=visual-studio
+
+* **NetStandard 2.0**
+	
+	https://docs.microsoft.com/en-us/dotnet/standard/net-standard
+
+* **Akka.Net 1.3.10**
+
+	https://getakka.net/ 
+
+	Allows you to build powerful distributed event driven systems using actors.  
+	
+* **Akka.Cluster 1.3.10**
+
+	https://getakka.net/articles/clustering/cluster-overview.html
+	
+
+* **Akka.Cluster.Tools 1.3.10** - The cluster tools brings us the ability to have the following.
+	- Singleton: https://getakka.net/articles/clustering/cluster-singleton.html
+	- Distributed Pub/Sub: https://getakka.net/articles/clustering/distributed-publish-subscribe.html
+ 	- Sharding: https://getakka.net/articles/clustering/cluster-sharding.html
+	
+* **FileHelpers 3.3.0**
+
+	https://www.filehelpers.net/
+
+	By creating a simple class that describes the file I wanted to import allowed me to easily read the contents of a file.
+	You can see the simple example in the SharedLibrary\Actors\FileReaderActor.cs file.
+	
+		var engine = new FileHelperEngine<FileModel>();
+		var records = engine.ReadFile(file.Args.FullPath);
+	
+* **Knockout 3.3.0**
+
+	https://knockoutjs.com/
+
+	This made it easy to wire up bindings for a quick demo.  
+	You can see this in action in the WebMonitor in the WebMonitor\wwwroot\index.html file.
+
+
+
+
+
+
+
+# Common Akka Links to help you along with your Akka adventure!
 Main Site: http://getakka.net/
 
 Documentation: http://getakka.net/docs/
