@@ -64,7 +64,7 @@ namespace SharedLibrary.Actors
                 _currentRecord = record.UserName;
                 Become(Working);
 
-                // *** BroadCast to all worker actors.
+                // *** BroadCast the message to all worker actors.
                 _workerRouter.Tell(new ProcessLine(record.UserName));
 
                 // Switch States

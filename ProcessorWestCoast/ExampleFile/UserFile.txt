@@ -1,4 +1,0 @@
-"ADUSERNAME"|"SITE"
-"chris.stevens"|"ThisPlace"
-"keevin.mitchell"|"ThatPlace"
-"kim.welch"|"OverThere"
