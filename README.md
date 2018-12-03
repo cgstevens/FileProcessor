@@ -83,7 +83,7 @@ To get the solution running follow these step.
 
 
 ## FileProcessor Hierarchical Structure
-<img src="https://github.com/cgstevens/FileProcessor/tree/master/Info/ActorHierarchicalStructure.png"/>
+<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ActorHierarchicalStructure.png"/>
 
 
 
