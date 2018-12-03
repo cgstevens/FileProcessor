@@ -80,6 +80,13 @@ To get the solution running follow these step.
 	You can see this in action in the WebMonitor in the WebMonitor\wwwroot\index.html file.
 
 
+
+
+## FileProcessor Hierarchical Structure
+<img src="https://github.com/cgstevens/FileProcessor/tree/master/Info/ActorHierarchicalStructure.png"/>
+
+
+
 ## Projects 
 
 ### Lighthouse 
