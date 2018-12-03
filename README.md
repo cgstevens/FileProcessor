@@ -147,6 +147,8 @@ In the FileProcessor example I have created a Singleton Actor.  This actor will 
 		// *** BroadCast the message to all worker actors.
                 _workerRouter.Tell(new ProcessLine(record.UserName));
 	
+	We can ask if the _workerRouter has any routes before trying to process the line. 
+	
 * **CreatexxxActors**
 	The CreateIdentity, CreateUser and CreatePrivilege actors all have the IFileProcessorRepository injected so that they can run the LongRunningProcess.  
 	The LongRunningProcess calls dbo.spLongRunningProcess_ProcessAllThingsMagically stored procedure to simulate a database call.
