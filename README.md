@@ -130,9 +130,29 @@ In the FileProcessor example I have created a Singleton Actor.  This actor will 
 	
 
 * **LineReaderActor**
-		
-		
+	This actor demonstrates how to create a BroadcastGroup.  
+	I have created 3 actors which I want to perform some sort of work based on the same message.
 	
+		
+		_createIdentityRef = Context.ActorOf(Context.DI().Props<CreateIdentityActor>(), "CreateIdentity");
+		_createUserRef = Context.ActorOf(Context.DI().Props<CreateUserActor>(), "CreateUser");
+		_createPrivilegeRef = Context.ActorOf(Context.DI().Props<CreatePrivilegeActor>(), "CreatePrivilegeActor");
+		
+		var workers = new[] { _createIdentityRef.Path.ToString(), _createUserRef.Path.ToString(), _createPrivilegeRef.Path.ToString() };
+		_workerRouter = Context.ActorOf(Props.Empty.WithRouter(new BroadcastGroup(workers)), "LineReaderGroup");
+	
+	By putting all 3 actors into a group I can send the following message and all 3 different actors will get the same message.
+	They will perform their task and then report back to the LineReaderActor.
+
+		// *** BroadCast the message to all worker actors.
+                _workerRouter.Tell(new ProcessLine(record.UserName));
+	
+* **CreatexxxActors**
+	The CreateIdentity, CreateUser and CreatePrivilege actors all have the IFileProcessorRepository injected so that they can run the LongRunningProcess.  
+	The LongRunningProcess calls dbo.spLongRunningProcess_ProcessAllThingsMagically stored procedure to simulate a database call.
+	By enabling the SqlConnection FireInfoMessageEventOnUserErrors we can use a callback to send the InfoMessages to this actor to relay it on to someone who can do something about it.
+	The stored procedure reports back a percent of completion.  This allows me to tell the user a progress real-time.
+
 
 
 
