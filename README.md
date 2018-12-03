@@ -52,11 +52,6 @@ The same message and information about the cluster is being presented in the Win
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ProjectRunningTwoWorkers.png"/>
 
 
-## FileProcessor Hierarchical Structure
-	
-<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ActorHierarchicalStructure.png"/>
-
-
 
 ## Projects 
 
@@ -71,6 +66,12 @@ You can see my older version created using DotNet 4.6 and AngularJS.  Same conce
 	https://github.com/cgstevens/MyClusterServices
 
 In the FileProcessor example I have created a Singleton Actor.  This actor will only exist on either the ProcessorEastCoast or ProcessorWestCoast services.  Since all actor systems are hierarchical; lets start are the top.
+
+
+### Processor Hierarchical Structure
+	
+<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ActorHierarchicalStructure.png"/>
+
 
 * **DatabaseWatcherActor**
 	This actor is created for the sole purpose to watch the database for changes and tell actors about these changes.
