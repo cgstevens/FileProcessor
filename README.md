@@ -42,7 +42,7 @@ To get the solution running follow these step to see the action!
 4. Viewing the WindowsMonitor you will be able to see all the members join the cluster.
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/WindowsMonitor.png"/>
 
-5. When the ProcessorEastCoast is initialized; it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you can copy the ExampleFile/UserFile.txt over.  The FileWatcher will pickup that the file which was created and send a message to the FileReader to start reading this file.  
+5. When the ProcessorEastCoast is initialized; it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you can copy the ExampleFile/UserFile.txt over.  The FileWatcher will recieve an event that the file was created and send a message to the FileReader to start reading this file.  
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ProcessorEastCoastInit2.png"/>
 
 6. You will see in the following screen shot all kinds of things going on. 
