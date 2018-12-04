@@ -29,7 +29,7 @@ To get the solution running follow these step to see the action!
 
 2. Create a location - Run the database script Database\CreateDummyRecord.sql.
 	This will create a location and file setting for the actor system to use.
-	The setting default to c:\common\<LocationName>.  
+	The settings default is c:\common\<LocationName>.  
 	When the Processor project runs and picks up the location it will create the folder.
 
 3. Build the solution and launch the following applications.
@@ -42,12 +42,15 @@ To get the solution running follow these step to see the action!
 4. Viewing the WindowsMonitor you will be able to see all the members join the cluster.
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/WindowsMonitor.png"/>
 
-5. When the ProcessorEastCoast is initialized it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you copy the ExampleFile/UserFile.txt over.  The FileWatcher will read pickup that the file was create and send a message to the FileReader to start reading this file.  
+5. When the ProcessorEastCoast is initialized; it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you can copy the ExampleFile/UserFile.txt over.  The FileWatcher will recieve an event that the file was created and send a message to the FileReader to start reading this file.  
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ProcessorEastCoastInit2.png"/>
 
-
-## FileProcessor Hierarchical Structure
-<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ActorHierarchicalStructure.png"/>
+6. You will see in the following screen shot all kinds of things going on. 
+The ProcessEastCoast, the manager, is processing one line on the EastCoastWorker and another line on the WestCoastWorker.
+All the statuses of what the Processor and Workers are doing are being delivered real-time to the WebMonitor.
+The same message as well as the cluster information is in the log section of the WindowsMonitor.
+ 
+<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ProjectRunningTwoWorkers.png"/>
 
 
 
@@ -64,6 +67,12 @@ You can see my older version created using DotNet 4.6 and AngularJS.  Same conce
 	https://github.com/cgstevens/MyClusterServices
 
 In the FileProcessor example I have created a Singleton Actor.  This actor will only exist on either the ProcessorEastCoast or ProcessorWestCoast services.  Since all actor systems are hierarchical; lets start are the top.
+
+
+### Processor Hierarchical Structure
+	
+<img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ActorHierarchicalStructure.png"/>
+
 
 * **DatabaseWatcherActor**
 	This actor is created for the sole purpose to watch the database for changes and tell actors about these changes.
@@ -86,7 +95,7 @@ In the FileProcessor example I have created a Singleton Actor.  This actor will 
 	This means that instead of creating this monolitic actors structure remotely; 
 	I would create smaller units of work that would be perform remotely.
 
-	Since this actor subcribes to, tenant, the DatabaseWatcher will let the manager know when a location has been addded or removed.
+	Since this actor subcribes to all location, the DatabaseWatcher will let the manager know when a location has been addded or removed.
 	This actor will create LocationActor's based on the name of the Location.	
 
 * **LocationActor**
@@ -135,10 +144,8 @@ Demonstrates clean exit when itself is removed from the cluster.
 The worker will get a set of records and then process those records.
 Report back what the status of the work back to the Tasker.
 
-      EastCoast
-      WestCoast
-
 ### WebMonitor
+The WebMonitor subscribes to the Topic.Status and sends anything messages sent to that Topic to the the SignalR Hub.
 
 ### WindowsMonitor
 Shows the state of the cluster from its point of view.  Allows you to tell a member of the clister to leave or be considered down. 
