@@ -29,7 +29,7 @@ To get the solution running follow these step to see the action!
 
 2. Create a location - Run the database script Database\CreateDummyRecord.sql.
 	This will create a location and file setting for the actor system to use.
-	The setting default to c:\common\<LocationName>.  
+	The settings default is c:\common\<LocationName>.  
 	When the Processor project runs and picks up the location it will create the folder.
 
 3. Build the solution and launch the following applications.
@@ -42,12 +42,13 @@ To get the solution running follow these step to see the action!
 4. Viewing the WindowsMonitor you will be able to see all the members join the cluster.
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/WindowsMonitor.png"/>
 
-5. When the ProcessorEastCoast is initialized it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you copy the ExampleFile/UserFile.txt over.  The FileWatcher will read pickup that the file was create and send a message to the FileReader to start reading this file.  
+5. When the ProcessorEastCoast is initialized; it will tell you that the FileWatcher is monitoring the c:\common\<-locationname-> folder. Once this folder is being watch you can copy the ExampleFile/UserFile.txt over.  The FileWatcher will pickup that the file which was created and send a message to the FileReader to start reading this file.  
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ProcessorEastCoastInit2.png"/>
 
-6. You will see in the following screen shot all kinds of things going on. The ProcessEastCoast, the manager, is processing one line on the EastCoastWorker and another line on the WestCoastWorker.
+6. You will see in the following screen shot all kinds of things going on. 
+The ProcessEastCoast, the manager, is processing one line on the EastCoastWorker and another line on the WestCoastWorker.
 All the statuses of what the Processor and Workers are doing are being delivered real-time to the WebMonitor.
-The same message and information about the cluster is being presented in the WindowsMonitor.
+The same message as well as the cluster information is in the log section of the WindowsMonitor.
  
 <img src="https://raw.githubusercontent.com/cgstevens/FileProcessor/master/Info/ProjectRunningTwoWorkers.png"/>
 
