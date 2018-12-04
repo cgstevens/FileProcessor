@@ -50,7 +50,7 @@
             // 
             // DownClusterButton
             // 
-            this.DownClusterButton.Location = new System.Drawing.Point(165, -1);
+            this.DownClusterButton.Location = new System.Drawing.Point(165, 1);
             this.DownClusterButton.Name = "DownClusterButton";
             this.DownClusterButton.Size = new System.Drawing.Size(75, 23);
             this.DownClusterButton.TabIndex = 20;
@@ -60,7 +60,7 @@
             // 
             // LeaveClusterButton
             // 
-            this.LeaveClusterButton.Location = new System.Drawing.Point(246, -1);
+            this.LeaveClusterButton.Location = new System.Drawing.Point(246, 1);
             this.LeaveClusterButton.Name = "LeaveClusterButton";
             this.LeaveClusterButton.Size = new System.Drawing.Size(75, 23);
             this.LeaveClusterButton.TabIndex = 19;
@@ -71,9 +71,9 @@
             // clusterListView
             // 
             this.clusterListView.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.clusterListView.Location = new System.Drawing.Point(0, 24);
+            this.clusterListView.Location = new System.Drawing.Point(0, 26);
             this.clusterListView.Name = "clusterListView";
-            this.clusterListView.Size = new System.Drawing.Size(807, 194);
+            this.clusterListView.Size = new System.Drawing.Size(807, 110);
             this.clusterListView.TabIndex = 18;
             this.clusterListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -97,7 +97,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(811, 222);
+            this.panel2.Size = new System.Drawing.Size(811, 140);
             this.panel2.TabIndex = 24;
             // 
             // label2
@@ -117,9 +117,9 @@
             this.panel3.Controls.Add(this.unreachableListView);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 222);
+            this.panel3.Location = new System.Drawing.Point(0, 140);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(811, 143);
+            this.panel3.Size = new System.Drawing.Size(811, 121);
             this.panel3.TabIndex = 25;
             // 
             // unreachableListView
@@ -127,7 +127,7 @@
             this.unreachableListView.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.unreachableListView.Location = new System.Drawing.Point(0, 23);
             this.unreachableListView.Name = "unreachableListView";
-            this.unreachableListView.Size = new System.Drawing.Size(807, 116);
+            this.unreachableListView.Size = new System.Drawing.Size(807, 94);
             this.unreachableListView.TabIndex = 25;
             this.unreachableListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -148,17 +148,17 @@
             this.panel4.Controls.Add(this.seenByListView);
             this.panel4.Controls.Add(this.label3);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 365);
+            this.panel4.Location = new System.Drawing.Point(0, 261);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(811, 166);
+            this.panel4.Size = new System.Drawing.Size(811, 136);
             this.panel4.TabIndex = 26;
             // 
             // seenByListView
             // 
             this.seenByListView.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.seenByListView.Location = new System.Drawing.Point(0, 21);
+            this.seenByListView.Location = new System.Drawing.Point(0, 22);
             this.seenByListView.Name = "seenByListView";
-            this.seenByListView.Size = new System.Drawing.Size(807, 141);
+            this.seenByListView.Size = new System.Drawing.Size(807, 110);
             this.seenByListView.TabIndex = 25;
             this.seenByListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -179,7 +179,7 @@
             this.panel5.Controls.Add(this.label4);
             this.panel5.Controls.Add(this.loggerBox);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 531);
+            this.panel5.Location = new System.Drawing.Point(0, 397);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(811, 183);
             this.panel5.TabIndex = 27;
@@ -198,7 +198,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(811, 729);
+            this.ClientSize = new System.Drawing.Size(811, 578);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
