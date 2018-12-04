@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Akka.Actor;
+using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Event;
 using SharedLibrary.Actors;
 using SharedLibrary.Messages;
@@ -10,6 +11,7 @@ namespace ProcessorEastCoast.Actors
     {
         private readonly ILoggingAdapter _logger;
         private readonly Dictionary<string, IActorRef> _locations;
+        private readonly IActorRef _mediator = DistributedPubSub.Get(Context.System).Mediator;
 
         public LocationManagerActor()
         {

@@ -92,7 +92,7 @@ namespace SharedLibrary.Actors
 
         private void BecomeGettingLocations()
         {
-            Self.Tell(new GetLocations(), Self);
+            Context.System.Scheduler.ScheduleTellOnce(TimeSpan.FromSeconds(5), Self, new GetLocations(), Self);
             Become(WaitingForLocations);
         }
 
@@ -129,7 +129,7 @@ namespace SharedLibrary.Actors
                         subscriber.Key.Tell(new RemoveLocation(location));
                     }
                 }
-                _cancelable = Context.System.Scheduler.ScheduleTellOnceCancelable(TimeSpan.FromSeconds(30), Self, new GetLocations(), Self);
+                _cancelable = Context.System.Scheduler.ScheduleTellOnceCancelable(TimeSpan.FromSeconds(60), Self, new GetLocations(), Self);
             });
 
             Receive<LocationsFromDatabase>(f =>
@@ -189,7 +189,7 @@ namespace SharedLibrary.Actors
 
                 Become(WaitingForSuscriptions);
                 Stash.UnstashAll();
-                _cancelable = Context.System.Scheduler.ScheduleTellOnceCancelable(TimeSpan.FromSeconds(30), Self, new GetLocations(), Self);
+                _cancelable = Context.System.Scheduler.ScheduleTellOnceCancelable(TimeSpan.FromSeconds(60), Self, new GetLocations(), Self);
             });
 
             ReceiveAny(task =>
@@ -223,12 +223,19 @@ namespace SharedLibrary.Actors
                     _subscriptionsToObjects.Add(s.Requestor, new ObjectSubscription(s.Location, s.ObjectToSubscribeTo));
                     LogToEverything(Context, $"Subscriber To Objects Added: {s.Requestor}");
 
+
+                    // TODO: Need to figure out a better way to subscribe to classes...
                     foreach (var location in _locations.Where(x => x.Key == s.Location))
                     {
                         var value = location.Value.GetPropertyValue(s.ObjectToSubscribeTo);
-
                         Sender.Tell(new ObjectChanged(s.ObjectToSubscribeTo, value));
                     }
+
+                    foreach (var location in _locations.Where(x => s.Location == "*"))
+                    {
+                        Sender.Tell(new AddLocation(location.Value.Id, location.Value.Name));
+                    }
+
                 }
             });
 
