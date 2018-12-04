@@ -10,7 +10,7 @@ petabridge.cmd{
 	host = "0.0.0.0"
 
 	# default port number used to listen for incoming petabridge.cmd client connections
-	port = 9122
+	port = 0
 }
 
 akka {
