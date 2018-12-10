@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsMonitor", "WindowsMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{03F99F45-1CB6-4E23-A52B-40865AEA5A6D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerTests", "WorkerTests\WorkerTests.csproj", "{6A8A3159-2CB3-42CE-8C34-6920B29DBE6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{03F99F45-1CB6-4E23-A52B-40865AEA5A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03F99F45-1CB6-4E23-A52B-40865AEA5A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03F99F45-1CB6-4E23-A52B-40865AEA5A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8A3159-2CB3-42CE-8C34-6920B29DBE6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8A3159-2CB3-42CE-8C34-6920B29DBE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8A3159-2CB3-42CE-8C34-6920B29DBE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8A3159-2CB3-42CE-8C34-6920B29DBE6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

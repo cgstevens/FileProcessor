@@ -21,7 +21,7 @@ namespace SharedLibrary.Actors
         private Dictionary<string, LocationModel> _locations;
         private CancellationTokenSource _cancelToken;
         private ICancelable _cancelable;
-        private readonly IActorRef _mediator = DistributedPubSub.Get(Context.System).Mediator;
+        private IActorRef _mediator;
         private Dictionary<IActorRef, ObjectSubscription> _subscriptionsToObjects;
         public IStash Stash { get; set; }
 
@@ -32,6 +32,10 @@ namespace SharedLibrary.Actors
             _locations = new Dictionary<string, LocationModel>();
             _subscriptionsToObjects = new Dictionary<IActorRef, ObjectSubscription>();
             _cancelToken = new CancellationTokenSource();
+            
+            // TODO: This needs to be fixed... How do I create the mediator in my Tests or do I need to inject?
+            //_mediator = DistributedPubSub.Get(Context.System).Mediator ?? ActorRefs.Nobody;  
+
             BecomeGettingLocations();
         }
         
@@ -92,7 +96,7 @@ namespace SharedLibrary.Actors
 
         private void BecomeGettingLocations()
         {
-            Context.System.Scheduler.ScheduleTellOnce(TimeSpan.FromSeconds(5), Self, new GetLocations(), Self);
+            Context.System.Scheduler.ScheduleTellOnce(TimeSpan.FromSeconds(2), Self, new GetLocations(), Self);
             Become(WaitingForLocations);
         }
 
@@ -218,10 +222,16 @@ namespace SharedLibrary.Actors
 
             Receive<SubscribeToObjectChanges>(s =>
             {
-                if (!_subscriptionsToObjects.ContainsKey(s.Requestor))
+                var sender = s.Requestor;
+                if (s.Requestor == null || s.Requestor.Equals(ActorRefs.Nobody))
                 {
-                    _subscriptionsToObjects.Add(s.Requestor, new ObjectSubscription(s.Location, s.ObjectToSubscribeTo));
-                    LogToEverything(Context, $"Subscriber To Objects Added: {s.Requestor}");
+                    sender = Sender;
+                }
+
+                if (!_subscriptionsToObjects.ContainsKey(sender))
+                {
+                    _subscriptionsToObjects.Add(sender, new ObjectSubscription(s.Location, s.ObjectToSubscribeTo));
+                    LogToEverything(Context, $"Subscriber To Objects Added: {sender}");
 
 
                     // TODO: Need to figure out a better way to subscribe to classes...
@@ -249,7 +259,7 @@ namespace SharedLibrary.Actors
         private void LogToEverything(IUntypedActorContext context, string message)
         {
             //context.ActorSelection("akka.tcp://mysystem@127.0.0.1:4063/user/StatusActor").Tell(new SignalRMessage(StaticMethods.GetServiceName(), "FileWatcher", message));
-            _mediator.Tell(new Publish(Topics.Status, new SignalRMessage($"{DateTime.Now}: {StaticMethods.GetSystemUniqueName()}", "FileWatcher", message)), context.Self);
+            //_mediator.Tell(new Publish(Topics.Status, new SignalRMessage($"{DateTime.Now}: {StaticMethods.GetSystemUniqueName()}", "FileWatcher", message)), context.Self);
             _logger.Info(message);
         }
     }
