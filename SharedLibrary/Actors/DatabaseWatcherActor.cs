@@ -68,6 +68,7 @@ namespace SharedLibrary.Actors
                     catch (Exception ex)
                     {
                         _logger.Error(ex, "Error getting locations.");
+                        throw;
                     }
                     return new LocationsFromDatabase(locations);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Akka.Actor;
 using Akka.Event;
 using Akka.TestKit.NUnit;
@@ -26,6 +27,34 @@ namespace WorkerTests
         {
             MockFileProcessorRepository = new Mock<IFileProcessorRepository>();
 
+
+
+            Sys.Settings.Config.WithFallback(Akka.Cluster.Tools.PublishSubscribe.DistributedPubSub.DefaultConfig());
+        }
+
+
+        [Test]
+        public void TaskException()
+        {
+            var locations = new List<LocationModel>();
+            locations.Add(new LocationModel(1, "Colorado"));
+
+            MockFileProcessorRepository
+                .Setup(repo => repo.GetLocationsWithFileSettings())
+                .Throws(new Exception("Error getting locations"));
+
+
+           
+            // expect exception
+            EventFilter.Exception<Exception>().Expect(2, () =>
+            {
+                Sys.ActorOf(Props.Create(() => new DatabaseWatcherActor(MockFileProcessorRepository.Object)), "DatabaseWatcher");
+            });
+        }
+
+        [Test]
+        public void AddRemoveLocationsFromCollection()
+        {
             var locations = new List<LocationModel>();
             locations.Add(new LocationModel(1, "Colorado"));
             locations.Add(new LocationModel(2, "Wyoming"));
@@ -36,31 +65,6 @@ namespace WorkerTests
                 .Setup(repo => repo.GetLocationsWithFileSettings())
                 .Returns(locations);
 
-
-            Sys.Settings.Config.WithFallback(Akka.Cluster.Tools.PublishSubscribe.DistributedPubSub.DefaultConfig());
-        }
-
-
-        //[Test]
-        //public void AddRemoveLocationsFromCollection2()
-        //{
-
-        //    var mockRepo = MockFileProcessorRepository
-        //        .Setup(x => x.GetLocationsWithFileSettings());
-
-
-        //    // create coordinator, which spins up odd/even child actors
-        //    var coordinator = Sys.ActorOf(Props.Create(() => new CreateUserActor(MockFileProcessorRepository.Object)), "CreateUser");
-
-        //    coordinator.Tell(new SubscribeToObjectChanges(ActorRefs.Nobody, "*", "*"));
-
-        //    // TestActor is sender so it will get reply (coordinator forwards instead of Tells)
-        //    ExpectMsg<ValidInput>();
-        //}
-
-        [Test]
-        public void AddRemoveLocationsFromCollection()
-        {
             var coordinator = Sys.ActorOf(Props.Create(() => new DatabaseWatcherActor(MockFileProcessorRepository.Object)), "DatabaseWatcher");
 
             coordinator.Tell(new SubscribeToObjectChanges(ActorRefs.Nobody, "*", "*"));
