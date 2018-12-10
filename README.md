@@ -224,5 +224,10 @@ Webcrawler: https://github.com/petabridge/akkadotnet-code-samples/tree/master/Cl
 
 Persistent Actors: https://petabridge.com/blog/intro-to-persistent-actors/
 
+Depency Injection: https://getakka.net/articles/actors/dependency-injection.html
 
+Cluster Sharding: https://getakka.net/articles/clustering/cluster-sharding.html
 
+Actor TestKit: https://getakka.net/articles/actors/testing-actor-systems.html
+
+Distributed Pub/Sub: https://petabridge.com/blog/distributed-pub-sub-intro-akkadotnet/
