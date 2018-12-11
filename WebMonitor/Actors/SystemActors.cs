@@ -3,6 +3,8 @@
 namespace WebMonitor.Actors
 {
 
+    public delegate IActorRef InjectedActorProvider();
+
     public static class SystemActors
     {
         public static ActorSystem ClusterSystem;

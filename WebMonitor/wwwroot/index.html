@@ -6,8 +6,8 @@
 <body>
     <div class="container">
         <input type="text" id="message" />
-        <input type="button" id="sendmessage" value="Send" />
-        <ul id="discussion"></ul>
+        <input type="button" id="sendmessage" value="Send SignalR" />
+        <input type="button" id="sendmessage2" value="Send Controller" />
 
         <div class="well" id="output">
             <!-- ko foreach: messages -->
@@ -20,9 +20,12 @@
     <!--Reference the SignalR library. -->
     <script type="text/javascript" src="lib/signalr.min.js"></script>
     <script src="/lib/knockoutjs/knockout-3.3.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
 
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
+
         function StreamViewModel() {
             var self = this;
 
@@ -38,9 +41,26 @@
         ko.applyBindings(stream);
 
         document.addEventListener('DOMContentLoaded', function () {
-
+            
             var messageInput = document.getElementById('message');
             messageInput.focus();
+
+
+            document.getElementById('sendmessage2').addEventListener('click', function (event) {
+                var data = {};
+                data.Message = messageInput.value;
+
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost:61811/api/actor",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json"
+                }).then(function (data) {
+                    //stream.addMessage(data.message);
+                });
+            });
+
 
             // Start the connection.
             var connection = new signalR.HubConnectionBuilder()
@@ -70,8 +90,8 @@
                         connection.invoke('send', 'client', messageInput.value);
 
                         // Clear text box and reset focus for next comment.
-                        messageInput.value = '';
-                        messageInput.focus();
+                        //messageInput.value = '';
+                        //messageInput.focus();
                         event.preventDefault();
                     });
                 })

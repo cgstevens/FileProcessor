@@ -31,6 +31,13 @@ namespace WebMonitor.Hubs
             return Task.CompletedTask;
         }
 
+        public Task StartSignalR(IActorRef actor)
+        {
+            actor.Tell(new SignalRActor.SetHub(this));
+            return Task.CompletedTask;
+        }
+
+
         public Task StopAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
