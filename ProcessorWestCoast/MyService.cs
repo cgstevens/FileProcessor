@@ -22,7 +22,8 @@ namespace ProcessorWestCoast
             // Create and build the container
             var container = new Ninject.StandardKernel();
             container.Bind<IFileProcessorRepository>().To(typeof(FileProcessorRepository)).InTransientScope();
-            
+            container.Bind<DistributedPubSub>().ToConstant(DistributedPubSub.Get(SystemActors.ClusterSystem));
+
             // Create the dependency resolver for the actor system
             IDependencyResolver resolver = new NinjectDependencyResolver(container, SystemActors.ClusterSystem);
 

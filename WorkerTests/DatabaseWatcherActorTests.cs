@@ -42,13 +42,12 @@ namespace WorkerTests
             MockFileProcessorRepository
                 .Setup(repo => repo.GetLocationsWithFileSettings())
                 .Throws(new Exception("Error getting locations"));
-
-
+            
            
             // expect exception
             EventFilter.Exception<Exception>().Expect(2, () =>
             {
-                Sys.ActorOf(Props.Create(() => new DatabaseWatcherActor(MockFileProcessorRepository.Object)), "DatabaseWatcher");
+                Sys.ActorOf(Props.Create(() => new DatabaseWatcherActor(MockFileProcessorRepository.Object, null)), "DatabaseWatcher");
             });
         }
 
@@ -65,7 +64,7 @@ namespace WorkerTests
                 .Setup(repo => repo.GetLocationsWithFileSettings())
                 .Returns(locations);
 
-            var coordinator = Sys.ActorOf(Props.Create(() => new DatabaseWatcherActor(MockFileProcessorRepository.Object)), "DatabaseWatcher");
+            var coordinator = Sys.ActorOf(Props.Create(() => new DatabaseWatcherActor(MockFileProcessorRepository.Object, null)), "DatabaseWatcher");
 
             coordinator.Tell(new SubscribeToObjectChanges(ActorRefs.Nobody, "*", "*"));
 

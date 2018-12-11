@@ -25,16 +25,15 @@ namespace SharedLibrary.Actors
         private Dictionary<IActorRef, ObjectSubscription> _subscriptionsToObjects;
         public IStash Stash { get; set; }
 
-        public DatabaseWatcherActor(IFileProcessorRepository fileProcessorRepository)
+        public DatabaseWatcherActor(IFileProcessorRepository fileProcessorRepository, DistributedPubSub distributedPubSub)
         {
             _fileProcessorRepository = fileProcessorRepository ?? throw new ArgumentNullException(nameof(fileProcessorRepository));
             _logger = Context.GetLogger();
             _locations = new Dictionary<string, LocationModel>();
             _subscriptionsToObjects = new Dictionary<IActorRef, ObjectSubscription>();
             _cancelToken = new CancellationTokenSource();
-            
-            // TODO: This needs to be fixed... How do I create the mediator in my Tests or do I need to inject?
-            //_mediator = DistributedPubSub.Get(Context.System).Mediator ?? ActorRefs.Nobody;  
+
+            _mediator = distributedPubSub?.Mediator ?? ActorRefs.Nobody;
 
             BecomeGettingLocations();
         }
@@ -259,8 +258,8 @@ namespace SharedLibrary.Actors
         }
         private void LogToEverything(IUntypedActorContext context, string message)
         {
-            //context.ActorSelection("akka.tcp://mysystem@127.0.0.1:4063/user/StatusActor").Tell(new SignalRMessage(StaticMethods.GetServiceName(), "FileWatcher", message));
-            //_mediator.Tell(new Publish(Topics.Status, new SignalRMessage($"{DateTime.Now}: {StaticMethods.GetSystemUniqueName()}", "FileWatcher", message)), context.Self);
+            //context.ActorSelection("akka.tcp://mysystem@127.0.0.1:4063/user/StatusActor").Tell(new SignalRMessage(StaticMethods.GetServiceName(), "DatabaseWatcher", message));
+            _mediator.Tell(new Publish(Topics.Status, new SignalRMessage($"{DateTime.Now}: {StaticMethods.GetSystemUniqueName()}", "DatabaseWatcher", message)), context.Self);
             _logger.Info(message);
         }
     }
