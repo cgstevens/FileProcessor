@@ -39,13 +39,25 @@ namespace WorkerTests
         /// </summary>
         public class OddEvenCoordinatorActor : ReceiveActor
         {
-
-            public static readonly SupervisorStrategy MySupervisorStrategy = new OneForOneStrategy(Decider.From(Directive.Restart,
-                new KeyValuePair<Type, Directive>(typeof(BadDataException), Directive.Stop)));
-
             protected override SupervisorStrategy SupervisorStrategy()
             {
-                return MySupervisorStrategy;
+                return new OneForOneStrategy(
+                    maxNrOfRetries: 3,
+                    withinTimeRange: TimeSpan.FromSeconds(5),
+                    localOnlyDecider: ex =>
+                    {
+                        switch (ex)
+                        {
+                            case ArithmeticException ae:
+                                return Directive.Resume;
+                            case BadDataException nre:
+                                return Directive.Restart;
+                            case ArgumentException are:
+                                return Directive.Stop;
+                            default:
+                                return Directive.Escalate;
+                        }
+                    });
             }
 
             public OddEvenCoordinatorActor()

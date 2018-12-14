@@ -6,6 +6,7 @@ using Akka.Actor;
 using Akka.Cluster.Routing;
 using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Event;
+using Akka.Pattern;
 using Akka.Routing;
 using FileHelpers;
 using SharedLibrary.Enums;
@@ -45,6 +46,23 @@ namespace SharedLibrary.Actors
 
             if (workType == WorkType.Cluster)
             {
+                //var childProps = Props.Create<CreateUserActor>();
+                //var supervisor = BackoffSupervisor.Props(
+                //    Backoff.OnStop(
+                //            childProps,
+                //            childName: "CreateUser",
+                //            minBackoff: TimeSpan.FromSeconds(3),
+                //            maxBackoff: TimeSpan.FromSeconds(30),
+                //            randomFactor: 0.2)
+                //        .WithAutoReset(TimeSpan.FromSeconds(10))
+                //        .WithSupervisorStrategy(new OneForOneStrategy(exception =>
+                //        {
+                //            if (exception is BadDataException)
+                //                return Directive.Restart;
+                //            return Directive.Escalate;
+                //        })));
+
+
                 //***Cluster Round Robin example***//
                 var clusterMaxWorkerInstancesPerNode = 1;
                 var clusterMaxWorkerInstances = 3;

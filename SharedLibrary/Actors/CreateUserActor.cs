@@ -31,12 +31,24 @@ namespace SharedLibrary.Actors
             Become(WaitingToWork);
             _cancelToken = new CancellationTokenSource();
         }
+
+        protected override void PreStart()
+        {
+            _logger.Info("CreateUserActor is pre-starting.");
+            base.PreStart();
+        }
+
         protected override void PostStop()
         {
             _cancelToken?.Cancel(false);
             _cancelToken?.Dispose();
+
+            Sender.Tell(new BadDataShutdown(Self, _currentRecord));
+            _logger.Info("CreateUserActor shutting down.");
             base.PostStop();
         }
+
+
 
         private void WaitingToWork()
         {
@@ -46,6 +58,13 @@ namespace SharedLibrary.Actors
                 var self = Self;
                 _logger.Info($"{record.UserName} : User process is starting.");
                 _currentRecord = record.UserName;
+
+                var random = new Random();
+                int randomNumber = random.Next(0, 5);
+                if(randomNumber == 1 || randomNumber == 4)
+                    throw new BadDataException("Something happened... please help me.");
+
+
                 Become(Working);
 
                 ProcessIdentity();
