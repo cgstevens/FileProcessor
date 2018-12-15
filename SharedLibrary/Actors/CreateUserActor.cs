@@ -34,7 +34,7 @@ namespace SharedLibrary.Actors
 
         protected override void PreStart()
         {
-            _logger.Info("CreateUserActor is pre-starting.");
+            LogToEverything(Context, "CreateUserActor is pre-starting.");
             base.PreStart();
         }
 
@@ -43,8 +43,8 @@ namespace SharedLibrary.Actors
             _cancelToken?.Cancel(false);
             _cancelToken?.Dispose();
 
-            Sender.Tell(new BadDataShutdown(Self, _currentRecord));
-            _logger.Info("CreateUserActor shutting down.");
+            Sender?.Tell(new BadDataShutdown(Self, _currentRecord));
+            LogToEverything(Context, "CreateUserActor shutting down.");
             base.PostStop();
         }
 
