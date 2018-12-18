@@ -21,12 +21,43 @@ namespace Demo.Actors
             var systemName = myConfig.GetString("actorsystem");
 
             var persistenceConfig = systemConfig.GetConfig("akka.persistence");
-            SystemActors.System = ActorSystem.Create(systemName, persistenceConfig);
 
-            var actorA = SystemActors.System.ActorOf(Props.Create(() => new ActorA()), "A");
+
+            var specString = @"
+                    akka.persistence {
+                        publish-plugin-commands = on
+                        journal {
+                            plugin = ""akka.persistence.journal.sql-server""
+                            sql-server {
+                                class = ""Akka.Persistence.SqlServer.Journal.SqlServerJournal, Akka.Persistence.SqlServer""
+                                plugin-dispatcher = ""akka.actor.default-dispatcher""
+                                table-name = DemoJournal
+                                schema-name = dbo
+                                auto-initialize = on
+                                connection-string = ""Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;""
+                            }
+                        }
+
+                        snapshot-store {
+                            plugin = ""akka.persistence.snapshot-store.sql-server""
+                            sql-server {
+                                class = ""Akka.Persistence.SqlServer.Snapshot.SqlServerSnapshotStore, Akka.Persistence.SqlServer""
+                                plugin-dispatcher = ""akka.actor.default-dispatcher""
+                                table-name = DemoSnapShot
+                                schema-name = dbo
+                                auto-initialize = on
+                                connection-string = ""Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;""
+                            }
+                        }
+                    }";
+
+
+            SystemActors.System = ActorSystem.Create(systemName, specString);
+
+            var actorA = SystemActors.System.ActorOf(Props.Create(() => new ActorA()), "ActorA");
 
             var waiter = new Waiter();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 12; i++)
             {
                 var random = new Random(i);
                 int randomNumber = random.Next(0, 3000);
@@ -48,8 +79,16 @@ namespace Demo.Actors
             public ActorA()
             {
                 // recover
-                Recover<string>(str => _msgs.Add(str)); // from the journal
-                Recover<SnapshotOffer>(offer => {
+                Recover<string>(str =>
+                {// from the journal
+                    _log.Info($"Load Journal : Messages loaded={str}");
+
+                    _msgs.Add(str);
+
+                }); 
+                Recover<SnapshotOffer>(offer => 
+                {// from snapshot
+
                     var messages = offer.Snapshot as List<string>;
                     if (messages != null)
                     {
@@ -61,7 +100,7 @@ namespace Demo.Actors
 
                 // commands
                 Command<string>(str => Persist(str, s => {
-                    _msgs.Add(str); //add msg to in-memory event store after persisting
+                    _msgs.Add(str); //add msg to in-memory event store after persisting to data store
 
                     _log.Info($"Message:{str}");
 
@@ -86,51 +125,8 @@ namespace Demo.Actors
                     Sender.Tell(_msgs.ToImmutableList());
                 });
             }
-    }
-
-
-    public class ActorB : ReceiveActor
-        {
-            private readonly ILoggingAdapter _log = Context.GetLogger();
-
-            public ActorB()
-            {
-                Receives();
-            }
-
-            private void Receives()
-            {
-                Receive<string>(s =>
-                {
-                    var waiter = new Waiter();
-                    waiter.Wait(TimeSpan.FromSeconds(4));
-                    _log.Info($"{s}");
-                    Sender.Tell($"{s} [ActorB]Welcome to the Matrix.", Self);
-                });
-            }
         }
 
-        public class ActorC : ReceiveActor
-        {
-            private readonly ILoggingAdapter _log = Context.GetLogger();
 
-            public ActorC()
-            {
-                Receives();
-            }
-
-            private void Receives()
-            {
-                Receive<string>(s =>
-                {
-                    _log.Info($"[ActorC]Listens : {s}");
-                });
-
-                ReceiveAny(s =>
-                {
-                    _log.Info($"RecieveAny : {s}");
-                });
-            }
-        }
     }
 }
