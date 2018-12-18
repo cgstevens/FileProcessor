@@ -1,6 +1,6 @@
 ﻿using Akka.Actor;
 
-namespace ProcessorCentral.Actors
+namespace Demo.Actors
 {
     public static class SystemActors
     {

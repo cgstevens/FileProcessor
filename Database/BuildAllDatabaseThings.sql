@@ -313,3 +313,41 @@ PRINT FORMAT(getdate(), 'MM/dd/yyyy hh:mm:ss:fff tt', 'en-US') + N' - Stored Pro
 
 PRINT ''
 PRINT FORMAT(getdate(), 'MM/dd/yyyy hh:mm:ss:fff tt', 'en-US') + ' - SCRIPT COMPLETED'
+
+
+
+
+IF OBJECT_ID('dbo.DemoJournal') IS NULL 
+BEGIN
+
+	CREATE TABLE dbo.DemoJournal (
+	  Ordering BIGINT IDENTITY(1,1) NOT NULL,
+	  PersistenceID NVARCHAR(255) NOT NULL,
+	  SequenceNr BIGINT NOT NULL,
+	  Timestamp BIGINT NOT NULL,
+	  IsDeleted BIT NOT NULL,
+	  Manifest NVARCHAR(500) NOT NULL,
+	  Payload VARBINARY(MAX) NOT NULL,
+	  Tags NVARCHAR(100) NULL,
+	  SerializerId INTEGER NULL
+		CONSTRAINT PK_DemoJournal PRIMARY KEY (Ordering),
+	  CONSTRAINT QU_DemoJournal UNIQUE (PersistenceID, SequenceNr)
+	);
+
+	CREATE TABLE dbo.DemoSnapShot (
+	  PersistenceID NVARCHAR(255) NOT NULL,
+	  SequenceNr BIGINT NOT NULL,
+	  Timestamp DATETIME2 NOT NULL,
+	  Manifest NVARCHAR(500) NOT NULL,
+	  Snapshot VARBINARY(MAX) NOT NULL,
+	  SerializerId INTEGER NULL
+	  CONSTRAINT PK_DemoSnapShot PRIMARY KEY (PersistenceID, SequenceNr)
+	);
+
+	CREATE TABLE dbo.DemoMetadata (
+	  PersistenceID NVARCHAR(255) NOT NULL,
+	  SequenceNr BIGINT NOT NULL,
+	  CONSTRAINT PK_DemoMetadata PRIMARY KEY (PersistenceID, SequenceNr)
+	);
+
+END

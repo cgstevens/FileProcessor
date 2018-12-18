@@ -1,64 +1,68 @@
 myactorsystem{
   actorsystem: "mysystem" 
-  systemname: "EastCoastManager"
-}
-
-# See petabridge.cmd configuration options here: https://cmd.petabridge.com/articles/install/host-configuration.html
-petabridge.cmd{
-	# default IP address used to listen for incoming petabridge.cmd client connections
-	# should be a safe default as it listens on "all network interfaces".
-	host = "0.0.0.0"
-
-	# default port number used to listen for incoming petabridge.cmd client connections
-	port = 9112
+  systemname: "Demo"
 }
 
 akka {
-	stdout-loglevel = INFO
-    loglevel = INFO
-    log-config-on-start = off 
+loglevel = debug
+	persistence {
+		journal {
+				plugin = "akka.persistence.journal.sql-server"
+				sql-server {
+					# qualified type name of the SQL Server persistence journal actor
+					class = "Akka.Persistence.SqlServer.Journal.SqlServerJournal, Akka.Persistence.SqlServer"
 
-  actor {
-    provider = cluster	
-  }
-  
-  serializers {
-	hyperion = "Akka.Serialization.HyperionSerializer, Akka.Serialization.Hyperion"
-  }
-  serialization-bindings {
-	"System.Object" = hyperion
-  }
-  
-  remote {
-    log-remote-lifecycle-events = DEBUG
-    dot-netty.tcp {
-      transport-class = "Akka.Remote.Transport.DotNetty.TcpTransport, Akka.Remote"
-      applied-adapters = []
-      transport-protocol = tcp
-      #will be populated with a dynamic host-name at runtime if left uncommented
-      #public-hostname = "POPULATE STATIC IP HERE"
-      hostname = "0.0.0.0"
-      port = 4055
-    }
-  }            
+					# dispatcher used to drive journal actor
+					plugin-dispatcher = "akka.actor.default-dispatcher"
 
-  cluster {
-    #will inject this node as a self-seed node at run-time
-    #seed-nodes = ["akka.tcp://mysystem@127.0.0.1:4053"] 
-	seed-nodes = []
-    roles = [LocationWorker]
+					# connection string used for database access
+					connection-string = "Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;"
 
-	singleton {
-        singleton-name = "locationmanager"
-        role = "LocationMananger"
-        hand-over-retry-interval = 2s
-    }
-              
-    singleton-proxy {
-        singleton-name = "locationmanager"
-        role = "LocationMananger"
-        singleton-identification-interval = 2s
-        buffer-size = 1
-    }
+					# default SQL commands timeout
+					connection-timeout = 30s
+
+					# SQL server schema name to table corresponding with persistent journal
+					schema-name = dbo
+
+					# SQL server table corresponding with persistent journal
+					table-name = DemoJournal
+
+					# should corresponding journal table be initialized automatically
+					auto-initialize = off
+
+					# timestamp provider used for generation of journal entries timestamps
+					timestamp-provider = "Akka.Persistence.Sql.Common.Journal.DefaultTimestampProvider, Akka.Persistence.Sql.Common"
+
+					# metadata table
+					metadata-table-name = DemoMetadata
+				}
+		}
+
+		snapshot-store {
+				plugin = "akka.persistence.snapshot-store.sql-server"
+				sql-server {
+
+					# qualified type name of the SQL Server persistence journal actor
+					class = "Akka.Persistence.SqlServer.Snapshot.SqlServerSnapshotStore, Akka.Persistence.SqlServer"
+
+					# dispatcher used to drive journal actor
+					plugin-dispatcher = ""akka.actor.default-dispatcher""
+
+					# connection string used for database access
+					connection-string = "Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;"
+
+					# default SQL commands timeout
+					connection-timeout = 30s
+
+					# SQL server schema name to table corresponding with persistent journal
+					schema-name = dbo
+
+					# SQL server table corresponding with persistent journal
+					table-name = DemoSnapShot
+
+					# should corresponding journal table be initialized automatically
+					auto-initialize = off
+				}
+		}
   }
-}
+	

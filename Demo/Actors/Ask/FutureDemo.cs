@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Event;
-using Akka.Pattern;
-using Ninject.Activation;
 using SharedLibrary.Helpers;
-using SharedLibrary.Messages;
 
-namespace ProcessorCentral.Actors
+namespace Demo.Actors
 {
     public static class FutureDemo
     {

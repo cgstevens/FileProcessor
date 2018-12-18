@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using ProcessorCentral.Actors;
 using SharedLibrary.Helpers;
 
-namespace ProcessorCentral
+namespace Demo
 {
     public partial class Program
     {
