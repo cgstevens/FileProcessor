@@ -13,12 +13,12 @@ namespace Demo
         {
             // Show how to use a task to get results from multiple actors
             // Demo 
-            //FutureDemo.Start();
+            FutureDemo.Start();
 
 
             //AtLeastOnceDeliveryDemo.Start();
 
-            PersistenceDemo.Start();
+            //PersistenceDemo.Start();
 
 
         }
