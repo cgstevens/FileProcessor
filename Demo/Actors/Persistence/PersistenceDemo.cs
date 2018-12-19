@@ -49,10 +49,10 @@ namespace Demo.Actors.Persistence
 
 
             // Use File System as storage - Default
-            //SystemActors.System = ActorSystem.Create(systemName);
+            SystemActors.System = ActorSystem.Create(systemName);
 
             // Use SQL as storage
-            SystemActors.System = ActorSystem.Create(systemName, specString);
+            //SystemActors.System = ActorSystem.Create(systemName, specString);
 
 
             var myJobs = SystemActors.System.ActorOf(Props.Create(() => new MyJobsActor()), "MyJobManager");

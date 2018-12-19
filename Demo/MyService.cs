@@ -2,6 +2,8 @@
 using Akka.Actor;
 using Demo.Actors;
 using Demo.Actors.Ask;
+using Demo.Actors.AtLeastOnceDelivery;
+using Demo.Actors.Behavior;
 using Demo.Actors.Persistence;
 using Demo.Actors.Remote;
 
@@ -13,13 +15,16 @@ namespace Demo
         {
             // Show how to use a task to get results from multiple actors
             // Demo 
+
+            //BehaviorDemo.Start();
+
             //FutureDemo.Start();
 
             //AtLeastOnceDeliveryDemo.Start();
 
-            PersistenceDemo.Start();
+            //PersistenceDemo.Start();
 
-            //RemoteDemo.Start();
+            RemoteDemo.Start();
         }
 
         public Task TerminationHandle => SystemActors.System.WhenTerminated;

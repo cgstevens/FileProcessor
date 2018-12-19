@@ -14,7 +14,7 @@ namespace SharedLibrary.Actors.RemoteDemo
         {
             Receive<Job>(job =>
             {
-                _log.Info($"[{Sender}]: Working on {job.Key}");
+                _log.Info($"Working on {job.Key}");
 
                 Sender.Tell(job, Self);
             });

@@ -32,7 +32,7 @@ namespace Demo.Actors.Remote
                         }
                         remote {
                             dot-netty.tcp {
-                                port = 4050
+                                port = 0
                                 hostname = 127.0.0.1
                             }
                         }

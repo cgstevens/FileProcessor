@@ -12,8 +12,7 @@ namespace Demo.Actors.AtLeastOnceDelivery
             var myConfig = systemConfig.GetConfig("myactorsystem");
             var systemName = myConfig.GetString("actorsystem");
 
-            var persistenceConfig = systemConfig.GetConfig("akka.persistence");
-            SystemActors.System = ActorSystem.Create(systemName, persistenceConfig);
+            SystemActors.System = ActorSystem.Create(systemName);
 
             var recipientActor = SystemActors.System.ActorOf(Props.Create(() => new MyRecipientActor()), "Worker");
             var atLeastOnceDeliveryActor = SystemActors.System.ActorOf(Props.Create(() => new MyAtLeastOnceDeliveryActor(recipientActor)), "Manager");
