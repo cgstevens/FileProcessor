@@ -38,9 +38,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Update="akka.hocon">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="ExampleFile\UserFile.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
