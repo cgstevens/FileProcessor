@@ -49,10 +49,10 @@ namespace Demo.Actors.Persistence
 
 
             // Use File System as storage - Default
-            SystemActors.System = ActorSystem.Create(systemName);
+            //SystemActors.System = ActorSystem.Create(systemName);
 
             // Use SQL as storage
-            //SystemActors.System = ActorSystem.Create(systemName, specString);
+            SystemActors.System = ActorSystem.Create(systemName, specString);
 
 
             var myJobs = SystemActors.System.ActorOf(Props.Create(() => new MyJobsActor()), "MyJobManager");
@@ -88,9 +88,10 @@ namespace Demo.Actors.Persistence
             }
             public class Job
             {
-                public int Id { get; }
-                public string Name { get; }
+                public int Id { get; set; }
+                public string Name { get; set; }
 
+                public Job() { }
                 public Job(int id, string name)
                 {
                     Id = id;
@@ -112,6 +113,16 @@ namespace Demo.Actors.Persistence
 
             public MyJobsActor()
             {
+
+                Recover<string>(job =>
+                {
+                    // from the journal
+                    _log.Info($"Load Journal : Job loaded={job}_{_nextJobId}");
+
+                    _jobs.Add(new Job(_nextJobId, job));
+
+                });
+
                 // recover
                 Recover<Job>(job =>
                 {// from the journal
@@ -133,9 +144,9 @@ namespace Demo.Actors.Persistence
                 });
 
                 // commands
-                Command<StartJob>(str => Persist(str, s =>
+                Command<StartJob>(job => Persist(job.Name, s =>
                 {
-                    var name = $"{str.Name}_{_nextJobId}";
+                    var name = $"{job.Name}_{_nextJobId}";
                     _jobs.Add(new Job(_nextJobId, name)); //add msg to in-memory event store after persisting to data store
 
                     _log.Info($"Job:{name}");
@@ -151,11 +162,26 @@ namespace Demo.Actors.Persistence
                 Command<SaveSnapshotSuccess>(success => {
                     // soft-delete the journal up until the sequence # at
                     // which the snapshot was taken
+                    _log.Info("Save Snapshot Success; Deleting Journal Messages");
                     DeleteMessages(success.Metadata.SequenceNr);
                 });
                 Command<SaveSnapshotFailure>(failure => {
                     // handle snapshot save failure...
+                    _log.Info("Save Snapshot Failure");
                 });
+
+                Command<DeleteMessagesFailure>(failure => {
+                    // handle snapshot save failure...
+                    _log.Info("Delete Messages Failure");
+                });
+
+                Command<DeleteMessagesSuccess>(success => {
+                    // handle snapshot save success...
+                    _log.Info("Delete Messages Success");
+                });
+
+
+
                 Command<GetJobs>(get =>
                 {
                     Sender.Tell(_jobs.ToImmutableList());
