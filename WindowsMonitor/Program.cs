@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using Akka.Actor;
 
 namespace WinForms
 {

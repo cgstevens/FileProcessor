@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Akka.Actor;
 using SharedLibrary.Helpers;
 
 namespace Lighthouse

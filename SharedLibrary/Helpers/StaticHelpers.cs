@@ -29,6 +29,13 @@ namespace SharedLibrary.Helpers
             return myConfig.GetString("systemname"); 
         }
 
+        public static string GetDatbaseConnection()
+        {
+            var clusterConfig = ConfigurationFactory.ParseString(File.ReadAllText("akka.hocon"));
+            var myConfig = clusterConfig.GetConfig("myactorsystem");
+            return myConfig.GetString("dbconnection");
+        }
+
         public static string GetSystemUniqueName()
         {
             var clusterConfig = ConfigurationFactory.ParseString(File.ReadAllText("akka.hocon"));

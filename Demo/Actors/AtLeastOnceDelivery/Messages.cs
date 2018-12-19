@@ -1,31 +1,31 @@
 ﻿namespace Demo.Actors.AtLeastOnceDelivery
 {
-    public class ReliableDeliveryEnvelope<TMessage>
+    public class ReliableDeliveryEnvelope<TJob>
     {
-        public ReliableDeliveryEnvelope(TMessage message, long messageId)
+        public ReliableDeliveryEnvelope(TJob job, long jobId)
         {
-            Message = message;
-            MessageId = messageId;
+            Job = job;
+            JobId = jobId;
         }
 
-        public TMessage Message { get; private set; }
+        public TJob Job { get; private set; }
 
-        public long MessageId { get; private set; }
+        public long JobId { get; private set; }
     }
 
     public class ReliableDeliveryAck
     {
-        public ReliableDeliveryAck(long messageId)
+        public ReliableDeliveryAck(long jobId)
         {
-            MessageId = messageId;
+            JobId = jobId;
         }
 
-        public long MessageId { get; private set; }
+        public long JobId { get; private set; }
     }
 
-    public class Write
+    public class DeliverJob
     {
-        public Write(string content)
+        public DeliverJob(string content)
         {
             Content = content;
         }

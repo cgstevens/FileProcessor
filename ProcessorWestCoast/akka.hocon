@@ -1,6 +1,7 @@
 myactorsystem{
   actorsystem: "mysystem" 
   systemname: "WestCoastManager"
+  dbconnection: "Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;"
 }
 
 # See petabridge.cmd configuration options here: https://cmd.petabridge.com/articles/install/host-configuration.html

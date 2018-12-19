@@ -6,7 +6,6 @@ using Akka.Actor;
 using Akka.Cluster.Routing;
 using Akka.Cluster.Tools.PublishSubscribe;
 using Akka.Event;
-using Akka.Pattern;
 using Akka.Routing;
 using FileHelpers;
 using SharedLibrary.Enums;
@@ -211,7 +210,6 @@ namespace SharedLibrary.Actors
 
         private void LogToEverything(IUntypedActorContext context, string message)
         {
-            //context.ActorSelection("akka.tcp://mysystem@127.0.0.1:4063/user/StatusActor").Tell(new SignalRMessage(StaticMethods.GetServiceName(), "FileReader", message));
             _mediator.Tell(new Publish(Topics.Status, new SignalRMessage($"{DateTime.Now}: {StaticMethods.GetSystemUniqueName()}", "FileReader", message)), context.Self);
             _logger.Info(message);
         }

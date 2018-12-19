@@ -13,7 +13,7 @@ namespace SharedLibrary.Repos
         {
             var locations = new List<LocationModel>();
             
-            using (SqlConnection con = new SqlConnection("Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;"))
+            using (SqlConnection con = new SqlConnection(Helpers.StaticMethods.GetDatbaseConnection()))
             {
                 con.Open();
                 try
@@ -47,7 +47,7 @@ namespace SharedLibrary.Repos
         public void LongRunningProcess(string adUserName, int someRandomNumber, Action<string> callback)
         {
             var settings = new List<FileSettingsModel>();
-            using (SqlConnection con = new SqlConnection("Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;"))
+            using (SqlConnection con = new SqlConnection(Helpers.StaticMethods.GetDatbaseConnection()))
             {
                 if (callback != null)
                 {

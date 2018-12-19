@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Configuration;
 using Akka.Event;
 using Akka.Persistence;
 using SharedLibrary.Helpers;
 
-namespace Demo.Actors
+namespace Demo.Actors.Persistence
 {
     public static class PersistenceDemo
     {
@@ -19,10 +18,7 @@ namespace Demo.Actors
             var systemConfig = ConfigurationFactory.ParseString(File.ReadAllText("akka.hocon"));
             var myConfig = systemConfig.GetConfig("myactorsystem");
             var systemName = myConfig.GetString("actorsystem");
-
-            var persistenceConfig = systemConfig.GetConfig("akka.persistence");
-
-
+            
             var specString = @"
                     akka.persistence {
                         publish-plugin-commands = on
@@ -52,63 +48,103 @@ namespace Demo.Actors
                     }";
 
 
-            SystemActors.System = ActorSystem.Create(systemName, specString);
+            // Use File System as storage - Default
+            SystemActors.System = ActorSystem.Create(systemName);
 
-            var actorA = SystemActors.System.ActorOf(Props.Create(() => new ActorA()), "ActorA");
+            // Use SQL as storage
+            //SystemActors.System = ActorSystem.Create(systemName, specString);
+
+
+            var myJobs = SystemActors.System.ActorOf(Props.Create(() => new MyJobsActor()), "MyJobManager");
 
             var waiter = new Waiter();
             for (int i = 0; i < 12; i++)
             {
+                // Send a message randomly up to 2 seconds.
+                // This is to pretend like we recieved 12 jobs.
                 var random = new Random(i);
-                int randomNumber = random.Next(0, 3000);
+                int randomNumber = random.Next(0, 2000);
                 waiter.Wait(TimeSpan.FromMilliseconds(randomNumber));
-                actorA.Tell($"Test Message:{i}");
+                myJobs.Tell(new MyJobsActor.StartJob($"MyJob_{i}"));
             }
+
+            // Does the actor have all the jobs?
+            var result = myJobs.Ask(new MyJobsActor.GetJobs(), TimeSpan.FromSeconds(1)).Result as Array;
+            Console.WriteLine(String.Join(", ", result));
         }
         
-        public class ActorA : ReceivePersistentActor
+        public class MyJobsActor : ReceivePersistentActor
         {
-            public class GetMessages { }
+            public class GetJobs { }
+
+            public class StartJob
+            {
+                public string Name { get; }
+
+                public StartJob(string name)
+                {
+                    Name = name;
+                }
+            }
+            public class Job
+            {
+                public int Id { get; }
+                public string Name { get; }
+
+                public Job(int id, string name)
+                {
+                    Id = id;
+                    Name = name;
+                }
+            }
 
             private readonly ILoggingAdapter _log = Context.GetLogger();
-            private List<string> _msgs = new List<string>(); //INTERNAL STATE
+            private List<Job> _jobs = new List<Job>(); //INTERNAL STATE
+
+            private int _nextJobId
+            {
+                get { return _jobs.Count() + 1; }
+            }
+
             private int _msgsSinceLastSnapshot = 0;
 
             public override string PersistenceId => Context.Self.Path.Name;
 
-            public ActorA()
+            public MyJobsActor()
             {
                 // recover
-                Recover<string>(str =>
+                Recover<Job>(job =>
                 {// from the journal
-                    _log.Info($"Load Journal : Messages loaded={str}");
+                    _log.Info($"Load Journal : Job loaded={job.Id}");
 
-                    _msgs.Add(str);
+                    _jobs.Add(job);
 
                 }); 
                 Recover<SnapshotOffer>(offer => 
                 {// from snapshot
 
-                    var messages = offer.Snapshot as List<string>;
-                    if (messages != null)
+                    var jobs = offer.Snapshot as List<Job>;
+                    if (jobs != null)
                     {
-                        _log.Info($"Load Snapshot : Messages loaded={messages.Count}");
-
-                        _msgs = _msgs.Concat(messages).ToList();
+                        _log.Info($"Load Snapshot : Jobs loaded={jobs.Count}");
+                        _log.Info(String.Join(",", jobs.Select(x => x.Name)));
+                        _jobs = _jobs.Concat(jobs).ToList();
                     }
                 });
 
                 // commands
-                Command<string>(str => Persist(str, s => {
-                    _msgs.Add(str); //add msg to in-memory event store after persisting to data store
+                Command<StartJob>(str => Persist(str, s =>
+                {
+                    var name = $"{str.Name}_{_nextJobId}";
+                    _jobs.Add(new Job(_nextJobId, name)); //add msg to in-memory event store after persisting to data store
 
-                    _log.Info($"Message:{str}");
+                    _log.Info($"Job:{name}");
 
                     if (++_msgsSinceLastSnapshot % 5 == 0)
                     {
                         //time to save a snapshot
                         _log.Info("Save Snapshot");
-                        SaveSnapshot(_msgs);
+                        SaveSnapshot(_jobs);
 
                     }
                 }));
@@ -120,9 +156,9 @@ namespace Demo.Actors
                 Command<SaveSnapshotFailure>(failure => {
                     // handle snapshot save failure...
                 });
-                Command<GetMessages>(get =>
+                Command<GetJobs>(get =>
                 {
-                    Sender.Tell(_msgs.ToImmutableList());
+                    Sender.Tell(_jobs.ToImmutableList());
                 });
             }
         }

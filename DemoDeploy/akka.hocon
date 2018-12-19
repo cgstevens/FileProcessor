@@ -1,11 +1,10 @@
 myactorsystem{
-  actorsystem: "mysystem" 
-  systemname: "Demo"
+  actorsystem: "MyWorker" 
+  systemname: "DemoDeploy"
   dbconnection: "Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;"
 }
 
 akka {
-	loglevel = debug
-	
+	loglevel = debug	
 }
 	

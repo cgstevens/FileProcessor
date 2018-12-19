@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using Akka.Actor;
-using Akka.Event;
 using Akka.TestKit.NUnit;
 using Moq;
-using Moq.Language.Flow;
-using Ninject.Planning.Bindings.Resolvers;
 using NUnit.Framework;
 using SharedLibrary.Actors;
 using SharedLibrary.Messages;

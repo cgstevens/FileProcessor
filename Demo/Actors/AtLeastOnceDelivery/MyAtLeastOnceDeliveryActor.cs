@@ -11,12 +11,10 @@ namespace Demo.Actors.AtLeastOnceDelivery
         public override string PersistenceId => Context.Self.Path.Name;
         private int _counter = 0;
         private readonly ILoggingAdapter _logger;
-
-        private ICancelable _recurringMessageSend;
+        private ICancelable _recurringJobSend;
         private ICancelable _recurringSnapshotCleanup;
         private readonly IActorRef _targetActor;
-
-        private class DoSend { }
+        private class StartJob { }
         private class CleanSnapshots { }
         
         public MyAtLeastOnceDeliveryActor(IActorRef targetActor)
@@ -31,19 +29,20 @@ namespace Demo.Actors.AtLeastOnceDelivery
                 SetDeliverySnapshot(snapshot);
             });
 
-            Command<DoSend>(send =>
+            Command<StartJob>(send =>
             {
-                //_logger.Info("DoSend");
                 _counter++;
-                Self.Tell(new Write($"Message count={_counter};"));
+
+                _logger.Info($"StartJob {_counter}");
+                Self.Tell(new DeliverJob($"Job count={_counter};"));
             });
 
-            Command<Write>(write =>
+            Command<DeliverJob>(write =>
             {
-                Deliver(_targetActor.Path, messageId =>
+                Deliver(_targetActor.Path, jobId =>
                 {
-                    _logger.Info($"Write messageId:{messageId}; write:{write.Content}");
-                    return new ReliableDeliveryEnvelope<Write>(write, messageId);
+                    _logger.Info($"DeliverJob jobId:{jobId}; content:{write.Content}");
+                    return new ReliableDeliveryEnvelope<DeliverJob>(write, jobId);
 
                 });
 
@@ -54,8 +53,8 @@ namespace Demo.Actors.AtLeastOnceDelivery
 
             Command<ReliableDeliveryAck>(ack =>
             {
-                _logger.Info($"ReliableDeliveryAck messageId:{ack.MessageId}");
-                ConfirmDelivery(ack.MessageId);
+                _logger.Info($"ReliableDeliveryAck jobId:{ack.JobId}");
+                ConfirmDelivery(ack.JobId);
             });
 
             Command<CleanSnapshots>(clean =>
@@ -81,8 +80,8 @@ namespace Demo.Actors.AtLeastOnceDelivery
 
         protected override void PreStart()
         {
-            _recurringMessageSend = Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(10), Self, new DoSend(), Self);
+            _recurringJobSend = Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(10), Self, new StartJob(), Self);
 
             //_recurringSnapshotCleanup =
             //    Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(TimeSpan.FromSeconds(10),
@@ -94,7 +93,7 @@ namespace Demo.Actors.AtLeastOnceDelivery
         protected override void PostStop()
         {
             _recurringSnapshotCleanup?.Cancel();
-            _recurringMessageSend?.Cancel();
+            _recurringJobSend?.Cancel();
 
             base.PostStop();
         }

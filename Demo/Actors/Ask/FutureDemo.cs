@@ -4,7 +4,7 @@ using Akka.Actor;
 using Akka.Event;
 using SharedLibrary.Helpers;
 
-namespace Demo.Actors
+namespace Demo.Actors.Ask
 {
     public static class FutureDemo
     {
@@ -25,7 +25,7 @@ namespace Demo.Actors
 
             // WhenAll asks complete continue.
             var actorATask = actorA.Ask("[Me]-Is Anderson there?", TimeSpan.FromSeconds(1));
-            var actorAaTask = actorA.Ask("[Me-]Is Anderson there?", TimeSpan.FromSeconds(1));
+            var actorAaTask = actorA.Ask("[Me]-Is Anderson there?", TimeSpan.FromSeconds(1));
             var actorBTask = actorB.Ask("[Me]-What about Neo?", TimeSpan.FromSeconds(5));
 
             Task.WhenAll(actorATask, actorAaTask, actorBTask).ContinueWith(x =>

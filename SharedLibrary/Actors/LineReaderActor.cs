@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Akka.Actor;
 using Akka.Cluster.Tools.PublishSubscribe;
@@ -151,7 +150,6 @@ namespace SharedLibrary.Actors
 
         private void LogToEverything(IUntypedActorContext context, string message)
         {
-            //context.ActorSelection("akka.tcp://mysystem@127.0.0.1:4063/user/StatusActor").Tell(new SignalRMessage(StaticMethods.GetServiceName(), "LineReader", message));
             _mediator.Tell(new Publish(Topics.Status, new SignalRMessage($"{DateTime.Now}: {StaticMethods.GetSystemUniqueName()}", "LineReader", message)), context.Self);
             _logger.Info(message);
         }

@@ -1,9 +1,9 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Akka.Actor;
-using Akka.Configuration;
 using Demo.Actors;
-using Demo.Actors.AtLeastOnceDelivery;
+using Demo.Actors.Ask;
+using Demo.Actors.Persistence;
+using Demo.Actors.Remote;
 
 namespace Demo
 {
@@ -13,14 +13,13 @@ namespace Demo
         {
             // Show how to use a task to get results from multiple actors
             // Demo 
-            FutureDemo.Start();
-
+            //FutureDemo.Start();
 
             //AtLeastOnceDeliveryDemo.Start();
 
-            //PersistenceDemo.Start();
+            PersistenceDemo.Start();
 
-
+            //RemoteDemo.Start();
         }
 
         public Task TerminationHandle => SystemActors.System.WhenTerminated;
