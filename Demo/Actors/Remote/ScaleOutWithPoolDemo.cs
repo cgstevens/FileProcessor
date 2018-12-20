@@ -13,7 +13,7 @@ using SharedLibrary.Helpers;
 
 namespace Demo.Actors.Remote
 {
-    public static class ScaleUpDemo
+    public static class ScaleOutWithPoolDemo
     {
         public static void Start()
         {
@@ -26,7 +26,10 @@ namespace Demo.Actors.Remote
                         actor{
                             provider = remote
                             deployment {
-                                /remotejob {
+                                /EastCoast {
+                                    remote = ""akka.tcp://MyWorker@127.0.0.1:4080""
+                                }
+                                /WestCoast {
                                     remote = ""akka.tcp://MyWorker@127.0.0.1:4080""
                                 }
                             }
@@ -42,17 +45,16 @@ namespace Demo.Actors.Remote
 
             SystemActors.System = ActorSystem.Create(systemName, remoteString);
 
-            var scaleUp = 1;
+            var scaleUp = 5;
             var props = Props.Create<JobActor>().WithRouter(new RoundRobinPool(scaleUp));
 
+            var eastcoastActor = SystemActors.System.ActorOf(Props.Create(() => new JobActor()), "EastCoast"); 
+            var westcoastActor = SystemActors.System.ActorOf(props, "WestCoast"); 
 
-            //var broadcastOut = 5;
-            //var props = Props.Create<JobActor>().WithRouter(new BroadcastPool(broadcastOut));
+            var workers = new[] { eastcoastActor.Path.ToString(), westcoastActor.Path.ToString() };
+            var workerRouter = SystemActors.System.ActorOf(Props.Empty.WithRouter(new RoundRobinGroup(workers)), "WorkersGroup");
 
-
-            var remoteEcho1 = SystemActors.System.ActorOf(props, "remotejob");
-
-            SystemActors.System.ActorOf(Props.Create(() => new JobManagerActor(remoteEcho1)), "JobStarter1");
+            SystemActors.System.ActorOf(Props.Create(() => new JobManagerActor(workerRouter)), "JobManager");
             
         }
     }

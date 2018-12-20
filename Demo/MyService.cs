@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Akka.Actor;
 using Demo.Actors;
+using Demo.Actors.ActorSelection;
 using Demo.Actors.Ask;
 using Demo.Actors.AtLeastOnceDelivery;
 using Demo.Actors.Behavior;
@@ -24,9 +25,16 @@ namespace Demo
 
             //PersistenceDemo.Start();
 
+            //*****************************************
+            // The following examples require you to start Demo and DemoDeploy applications.
+
             //RemoteDemo.Start();
             
-            ScaleUpDemo.Start();
+            //ScaleUpWithPoolDemo.Start();
+
+            //ScaleOutWithPoolDemo.Start();
+
+            WildCardReporting.Start();
         }
 
         public Task TerminationHandle => SystemActors.System.WhenTerminated;

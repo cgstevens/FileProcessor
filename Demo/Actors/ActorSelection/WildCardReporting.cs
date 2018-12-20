@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
-using System.Linq;
 using Akka.Actor;
 using Akka.Configuration;
-using Akka.Event;
-using Akka.Persistence;
+using Akka.Routing;
 using SharedLibrary.Actors.RemoteDemo;
 using SharedLibrary.Helpers;
 
-namespace Demo.Actors.Remote
+namespace Demo.Actors.ActorSelection
 {
-    public static class RemoteDemo
+    public static class WildCardReporting
     {
         public static void Start()
         {
@@ -40,19 +36,12 @@ namespace Demo.Actors.Remote
 
 
             SystemActors.System = ActorSystem.Create(systemName, remoteString);
-            var remoteAddress = Address.Parse($"akka.tcp://MyWorker@127.0.0.1:4080");
-            //deploy remotely via config
-            var remoteEcho1 = SystemActors.System.ActorOf(Props.Create(() => new JobActor()), "remotejob");
 
-            //deploy remotely via code
-            //var remoteEcho2 =
-            //    SystemActors.System.ActorOf(
-            //        Props.Create(() => new JobActor())
-            //            .WithDeploy(Deploy.None.WithScope(new RemoteScope(remoteAddress))), "remotejob");
+            var props = Props.Create<JobWithBehaviorActor>().WithRouter(new RoundRobinPool(5));
 
-
-            SystemActors.System.ActorOf(Props.Create(() => new JobManagerActor(remoteEcho1)), "JobStarter1");
-            //SystemActors.System.ActorOf(Props.Create(() => new JobManagerActor(remoteEcho2)), "JobStarter2");
+            var remoteEcho1 = SystemActors.System.ActorOf(props, "remotejob");
+            SystemActors.System.ActorOf(Props.Create(() => new JobManagerActor(remoteEcho1)), "JobManager");
+            SystemActors.System.ActorOf(Props.Create(() => new ReportActor()), "Reporter");
         }
     }
 }
