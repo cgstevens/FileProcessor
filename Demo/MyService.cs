@@ -24,7 +24,9 @@ namespace Demo
 
             //PersistenceDemo.Start();
 
-            RemoteDemo.Start();
+            //RemoteDemo.Start();
+            
+            ScaleUpDemo.Start();
         }
 
         public Task TerminationHandle => SystemActors.System.WhenTerminated;
