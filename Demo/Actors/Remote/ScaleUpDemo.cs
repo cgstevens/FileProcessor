@@ -42,7 +42,7 @@ namespace Demo.Actors.Remote
 
             SystemActors.System = ActorSystem.Create(systemName, remoteString);
 
-            var scaleUp = 5;
+            var scaleUp = 1;
             var props = Props.Create<JobActor>().WithRouter(new RoundRobinPool(scaleUp));
 
 
