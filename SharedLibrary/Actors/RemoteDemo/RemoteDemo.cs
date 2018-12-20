@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Akka.Actor;
 using Akka.Event;
+using Akka.Util.Internal;
 using SharedLibrary.Helpers;
 
 namespace SharedLibrary.Actors.RemoteDemo
@@ -76,9 +77,11 @@ namespace SharedLibrary.Actors.RemoteDemo
         private Job _currentJob = new Job("NoJob");
         private int _waitTime;
         private IActorRef _currentSender;
+        private Dictionary<string, Job> _totalMessagesInQueue;
 
         public JobWithBehaviorActor()
         {
+            _totalMessagesInQueue = new Dictionary<string, Job>();
             Waiting();
         }
 
@@ -99,7 +102,6 @@ namespace SharedLibrary.Actors.RemoteDemo
                 _log.Info($"Working on {job.Key} and will take {_waitTime} milliseconds.");
 
                 Become(Working);
-
                 Context.System.Scheduler.ScheduleTellOnce(TimeSpan.FromMilliseconds(_waitTime), Self, new JobComplete(job), Self);
             });
         }
@@ -108,7 +110,9 @@ namespace SharedLibrary.Actors.RemoteDemo
         {
             Receive<GetStatus>(status =>
             {
-                Sender.Tell(new ReceivedStatus(_currentJob, $"Working and time expected to take {_waitTime}"));
+                int total = _totalMessagesInQueue.Count;
+                _log.Info($"GetStatus : Total in queue {total}");
+                Sender.Tell(new ReceivedStatus(_currentJob, $"Working; messages in queue {total}"));
             });
 
             Receive<JobComplete>(job =>
@@ -116,12 +120,17 @@ namespace SharedLibrary.Actors.RemoteDemo
                 _currentSender.Tell(job);
                 _currentJob = new Job("NoJob");
                 Become(Waiting);
+                _totalMessagesInQueue.Remove(job.Job.Key);
                 Stash.UnstashAll();
             });
 
             Receive<Job>(job =>
             {
-                _log.Info($"Working on {_currentJob.Key} and will stash {job.Key}.");
+                _log.Info($"Working on {_currentJob.Key} and will stash {job.Key}. Total {_totalMessagesInQueue.Count}");
+
+                if(!_totalMessagesInQueue.ContainsKey(job.Key))
+                    _totalMessagesInQueue.Add(job.Key, job);
+
                 Stash.Stash();
             });
         }

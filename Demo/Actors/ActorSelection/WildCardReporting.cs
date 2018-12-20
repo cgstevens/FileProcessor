@@ -37,7 +37,7 @@ namespace Demo.Actors.ActorSelection
 
             SystemActors.System = ActorSystem.Create(systemName, remoteString);
 
-            var props = Props.Create<JobWithBehaviorActor>().WithRouter(new RoundRobinPool(5));
+            var props = Props.Create<JobWithBehaviorActor>().WithRouter(new RoundRobinPool(3));
 
             var remoteEcho1 = SystemActors.System.ActorOf(props, "remotejob");
             SystemActors.System.ActorOf(Props.Create(() => new JobManagerActor(remoteEcho1)), "JobManager");
