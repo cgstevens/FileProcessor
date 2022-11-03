@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvalonMonitor.Views.ClusterView">
+  
+  <Expander IsExpanded="True">
+    <Expander.Header>
+      <DockPanel LastChildFill="False">
+        <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="Cluster Members" />
+        <Button DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Down" Command="{Binding Down}" />
+        <Button DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,0,0" Content="Leave" Command="{Binding Leave}" />
+        <!-- Rectangle / -->
+      </DockPanel>
+    </Expander.Header>
+    <Expander.Content>
+      <DataGrid Items="{Binding Items}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" AutoGenerateColumns="False" IsReadOnly="True" MinHeight="250">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Roles" Binding="{Binding Roles}" />
+          <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+          <DataGridTextColumn Header="Service Address" Binding="{Binding Address}" />
+          <DataGridTextColumn Header="DateStamp" Binding="{Binding TimeStamp}" />
+          <DataGridTextColumn Header="Cluster leader?" Binding="{Binding IsClusterLeader}" />
+          <DataGridTextColumn Header="Role leader?" Binding="{Binding IsRoleLeader}" />
+        </DataGrid.Columns>
+      </DataGrid>
+    </Expander.Content>
+  </Expander>
+  
+</UserControl>

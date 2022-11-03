@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "Demo\Demo.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoDeploy", "DemoDeploy\DemoDeploy.csproj", "{9BC268CA-55BE-4005-A7F9-DA240FBA5AE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalonMonitor", "AvalonMonitor\AvalonMonitor.csproj", "{63427C67-77D6-4CAC-8263-287C602D6463}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{9BC268CA-55BE-4005-A7F9-DA240FBA5AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BC268CA-55BE-4005-A7F9-DA240FBA5AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BC268CA-55BE-4005-A7F9-DA240FBA5AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63427C67-77D6-4CAC-8263-287C602D6463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63427C67-77D6-4CAC-8263-287C602D6463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63427C67-77D6-4CAC-8263-287C602D6463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63427C67-77D6-4CAC-8263-287C602D6463}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
