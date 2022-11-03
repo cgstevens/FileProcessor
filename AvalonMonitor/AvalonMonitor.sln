@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvalonMonitor", "AvalonMonitor.csproj", "{81CA4A97-F6BA-4342-8BDF-B75545873C13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLibrary", "..\..\SharedLibrary\SharedLibrary.csproj", "{DC1BEF7E-9430-44F0-869F-3E70E9868CBB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81CA4A97-F6BA-4342-8BDF-B75545873C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81CA4A97-F6BA-4342-8BDF-B75545873C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81CA4A97-F6BA-4342-8BDF-B75545873C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81CA4A97-F6BA-4342-8BDF-B75545873C13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC1BEF7E-9430-44F0-869F-3E70E9868CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC1BEF7E-9430-44F0-869F-3E70E9868CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC1BEF7E-9430-44F0-869F-3E70E9868CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC1BEF7E-9430-44F0-869F-3E70E9868CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6CDCC96-1E1A-48D9-AE6A-DF132D8B82BE}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,40 @@
+myactorsystem {
+  actorsystem: "mysystem" 
+  systemname: "AvalonMonitor"
+  dbconnection: "Server=.;Database=AkkaFileProcessor;Integrated Security=SSPI;"
+}
+
+akka {
+
+  actor {
+    provider = cluster	
+
+	deployment{
+		/monitor{
+			dispatcher = akka.actor.synchronized-dispatcher 
+		}
+	}
+  }
+  
+  remote {
+    log-remote-lifecycle-events = DEBUG
+    dot-netty.tcp {
+      transport-class = "Akka.Remote.Transport.DotNetty.TcpTransport, Akka.Remote"
+      applied-adapters = []
+      transport-protocol = tcp
+      #will be populated with a dynamic host-name at runtime if left uncommented
+      #public-hostname = "127.0.0.1"
+      hostname = "127.0.0.1"
+      port = 0
+    }
+  }            
+
+  cluster {
+    #will inject this node as a self-seed node at run-time
+    seed-nodes = ["akka.tcp://mysystem@127.0.0.1:4053"] 
+	#seed-nodes = []
+    roles = [AvalonMonitor]
+
+  }
+  
+}

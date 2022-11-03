@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:AvalonMonitor.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvalonMonitor.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Avalonia Monitor">
+
+  <DockPanel>
+    <views:ClusterView DockPanel.Dock="Top" DataContext="{Binding ClusterViewContext}" />
+    <views:LoggerView DockPanel.Dock="Bottom" DataContext="{Binding LoggerViewContext}" />
+    <views:SeenByView DockPanel.Dock="Left"  DataContext="{Binding SeenByViewContext}" />
+    <views:UnreachableView DockPanel.Dock="Right" DataContext="{Binding UnreachableViewContext}" />
+    <Rectangle />
+  </DockPanel>
+
+</Window>
